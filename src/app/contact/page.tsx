@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Send, User, MessageSquare, Smartphone } from 'lucide-react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name must be at most 50 characters."),
@@ -36,6 +37,8 @@ const defaultValues: Partial<ContactFormValues> = {
   message: "",
 };
 
+const MotionCard = motion(Card);
+
 export default function ContactPage() {
   const { toast } = useToast();
   const form = useForm<ContactFormValues>({
@@ -52,22 +55,40 @@ export default function ContactPage() {
     });
     form.reset();
   }
+  
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  };
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <Mail className="mx-auto h-16 w-16 text-primary mb-4" />
-        <h1 className="text-4xl font-bold font-headline">Get In Touch</h1>
-        <p className="text-lg text-muted-foreground mt-2">
+      <motion.div 
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="inline-block p-4 bg-primary/20 rounded-full mb-4">
+          <Mail className="h-16 w-16 text-primary" />
+        </div>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Get In Touch</h1>
+        <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
           We'd love to hear from you! Whether you have a question, feedback, or need support.
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid md:grid-cols-2 gap-12 items-start">
-        <Card className="shadow-xl">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+        <MotionCard 
+          className="bg-background/60 backdrop-blur-lg border border-white/10 shadow-2xl"
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <CardHeader>
             <CardTitle className="text-2xl font-headline flex items-center">
-              <MessageSquare className="mr-2 h-6 w-6 text-accent" /> Send Us a Message
+              <MessageSquare className="mr-3 h-7 w-7 text-accent" /> Send Us a Message
             </CardTitle>
             <CardDescription>Fill out the form and we'll respond as soon as possible.</CardDescription>
           </CardHeader>
@@ -83,7 +104,7 @@ export default function ContactPage() {
                        <FormControl>
                         <div className="relative">
                           <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input placeholder="Your full name" {...field} className="pl-9" />
+                          <Input placeholder="Your full name" {...field} className="pl-9 bg-background/80" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -99,7 +120,7 @@ export default function ContactPage() {
                       <FormControl>
                          <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input type="email" placeholder="you@example.com" {...field} className="pl-9" />
+                          <Input type="email" placeholder="you@example.com" {...field} className="pl-9 bg-background/80" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -113,7 +134,7 @@ export default function ContactPage() {
                     <FormItem>
                       <FormLabel>Subject (Optional)</FormLabel>
                       <FormControl>
-                        <Input placeholder="What is your message about?" {...field} />
+                        <Input placeholder="What is your message about?" {...field} className="bg-background/80"/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -128,7 +149,7 @@ export default function ContactPage() {
                       <FormControl>
                         <Textarea
                           placeholder="Tell us more..."
-                          className="resize-none h-32"
+                          className="resize-none h-32 bg-background/80"
                           {...field}
                         />
                       </FormControl>
@@ -136,37 +157,45 @@ export default function ContactPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg" disabled={form.formState.isSubmitting}>
-                  <Send className="mr-2 h-5 w-5" /> {form.formState.isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
+                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20" disabled={form.formState.isSubmitting}>
+                    <Send className="mr-2 h-5 w-5" /> {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
+                </motion.div>
               </form>
             </Form>
           </CardContent>
-        </Card>
+        </MotionCard>
 
-        <div className="space-y-8">
-          <Card className="shadow-xl">
+        <motion.div 
+          className="space-y-8"
+          variants={cardVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <Card className="bg-background/60 backdrop-blur-lg border border-white/10 shadow-2xl">
             <CardHeader>
               <CardTitle className="text-2xl font-headline flex items-center">
-                <Smartphone className="mr-2 h-6 w-6 text-accent" /> Business Contact Info
+                <Smartphone className="mr-3 h-7 w-7 text-accent" /> Business Contact Info
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-lg">
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-4">
                 <MapPin className="h-6 w-6 text-primary mt-1 shrink-0" />
                 <div>
                   <h4 className="font-semibold">Our Office</h4>
                   <p className="text-muted-foreground">123 Tech Street, Silicon Valley, CA 94000, USA</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-4">
                 <Phone className="h-6 w-6 text-primary mt-1 shrink-0" />
                 <div>
                   <h4 className="font-semibold">Phone Support</h4>
                   <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary transition-colors">+1 (234) 567-890</a>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-4">
                 <Mail className="h-6 w-6 text-primary mt-1 shrink-0" />
                 <div>
                   <h4 className="font-semibold">Email Support</h4>
@@ -176,7 +205,7 @@ export default function ContactPage() {
             </CardContent>
           </Card>
           
-          <div className="rounded-lg overflow-hidden shadow-xl">
+          <div className="rounded-lg overflow-hidden shadow-2xl border border-white/10">
             <Image 
               src="https://placehold.co/600x400.png"
               alt="Contact us illustration"
@@ -186,7 +215,7 @@ export default function ContactPage() {
               data-ai-hint="customer support team"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

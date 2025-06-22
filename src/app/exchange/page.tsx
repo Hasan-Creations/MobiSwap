@@ -27,6 +27,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { UploadCloud, Smartphone, User, Mail, Phone } from "lucide-react";
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from "react";
+import { motion } from 'framer-motion';
 
 const exchangeFormSchema = z.object({
   currentMobileModel: z.string().min(2, "Mobile model must be at least 2 characters.").max(50, "Mobile model must be at most 50 characters."),
@@ -51,6 +52,8 @@ const defaultValues: Partial<ExchangeFormValues> = {
   phone: "",
   email: "",
 };
+
+const MotionCard = motion(Card);
 
 export default function ExchangePage() {
   const { toast } = useToast();
@@ -85,10 +88,17 @@ export default function ExchangePage() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <Card className="max-w-2xl mx-auto shadow-xl">
+      <MotionCard 
+        className="max-w-3xl mx-auto bg-background/60 backdrop-blur-lg border border-white/10 shadow-2xl"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <CardHeader className="text-center">
-          <Smartphone className="mx-auto h-12 w-12 text-primary mb-2" />
-          <CardTitle className="text-3xl font-bold font-headline">Exchange Your Old Phone</CardTitle>
+          <div className="inline-block p-3 bg-primary/20 rounded-full mb-2 mx-auto">
+            <Smartphone className="h-12 w-12 text-primary" />
+          </div>
+          <CardTitle className="text-3xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Exchange Your Old Phone</CardTitle>
           <CardDescription className="text-lg text-muted-foreground">
             Fill out the form below to get an estimate for your old device.
           </CardDescription>
@@ -96,7 +106,7 @@ export default function ExchangePage() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <fieldset className="space-y-6 border p-4 rounded-md">
+              <fieldset className="space-y-6 border border-white/10 p-4 rounded-md">
                 <legend className="text-lg font-semibold px-1 font-headline text-primary">Your Current Device</legend>
                 <FormField
                   control={form.control}
@@ -105,7 +115,7 @@ export default function ExchangePage() {
                     <FormItem>
                       <FormLabel>Current Mobile Model</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., iPhone 12 Pro Max" {...field} />
+                        <Input placeholder="e.g., iPhone 12 Pro Max" {...field} className="bg-background/80" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -119,7 +129,7 @@ export default function ExchangePage() {
                       <FormLabel>Condition</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="bg-background/80">
                             <SelectValue placeholder="Select condition" />
                           </SelectTrigger>
                         </FormControl>
@@ -141,7 +151,7 @@ export default function ExchangePage() {
                     <FormItem>
                       <FormLabel>IMEI Number (Optional)</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter IMEI if known" {...field} />
+                        <Input placeholder="Enter IMEI if known" {...field} className="bg-background/80" />
                       </FormControl>
                       <FormDescription>Dial *#06# to find your IMEI.</FormDescription>
                       <FormMessage />
@@ -155,7 +165,7 @@ export default function ExchangePage() {
                     <FormItem>
                       <FormLabel>Storage Capacity (Optional)</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., 128GB, 256GB" {...field} />
+                        <Input placeholder="e.g., 128GB, 256GB" {...field} className="bg-background/80" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -170,7 +180,7 @@ export default function ExchangePage() {
                       <FormControl>
                         <Textarea
                           placeholder="Describe any known issues, e.g., cracked screen, battery problems."
-                          className="resize-none"
+                          className="resize-none bg-background/80"
                           {...field}
                         />
                       </FormControl>
@@ -187,7 +197,7 @@ export default function ExchangePage() {
                       <FormControl>
                         <div className="flex items-center space-x-2">
                            <UploadCloud className="h-5 w-5 text-muted-foreground" />
-                           <Input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)} className="border-dashed" />
+                           <Input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)} className="border-dashed bg-background/80" />
                         </div>
                       </FormControl>
                       <FormDescription>An image helps us assess the condition better.</FormDescription>
@@ -197,7 +207,7 @@ export default function ExchangePage() {
                 />
               </fieldset>
 
-              <fieldset className="space-y-6 border p-4 rounded-md">
+              <fieldset className="space-y-6 border border-white/10 p-4 rounded-md">
                 <legend className="text-lg font-semibold px-1 font-headline text-primary">Your Contact Information</legend>
                  <FormField
                   control={form.control}
@@ -208,7 +218,7 @@ export default function ExchangePage() {
                       <FormControl>
                         <div className="relative">
                           <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input placeholder="Your full name" {...field} className="pl-9" />
+                          <Input placeholder="Your full name" {...field} className="pl-9 bg-background/80" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -224,7 +234,7 @@ export default function ExchangePage() {
                        <FormControl>
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input type="tel" placeholder="+1 (555) 123-4567" {...field} className="pl-9" />
+                          <Input type="tel" placeholder="+1 (555) 123-4567" {...field} className="pl-9 bg-background/80" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -240,7 +250,7 @@ export default function ExchangePage() {
                       <FormControl>
                          <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input type="email" placeholder="you@example.com" {...field} className="pl-9" />
+                          <Input type="email" placeholder="you@example.com" {...field} className="pl-9 bg-background/80" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -249,13 +259,15 @@ export default function ExchangePage() {
                 />
               </fieldset>
               
-              <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? "Submitting..." : "Submit Exchange Request"}
-              </Button>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? "Submitting..." : "Submit Exchange Request"}
+                </Button>
+              </motion.div>
             </form>
           </Form>
         </CardContent>
-      </Card>
+      </MotionCard>
     </div>
   );
 }

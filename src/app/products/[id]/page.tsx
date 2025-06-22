@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useParams, useRouter } from 'next/navigation';
@@ -20,6 +21,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { motion } from 'framer-motion';
+
+const MotionCard = motion(Card);
 
 export default function ProductDetailsPage() {
   const params = useParams();
@@ -39,14 +43,40 @@ export default function ProductDetailsPage() {
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, delayChildren: 0.3 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <Button variant="outline" onClick={() => router.back()} className="mb-6">
-        <ChevronLeft className="mr-2 h-4 w-4" /> Back
-      </Button>
-      <Card className="overflow-hidden shadow-xl">
+      <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+        <Button variant="outline" onClick={() => router.back()} className="mb-6 hover:bg-primary/10 hover:text-primary">
+          <ChevronLeft className="mr-2 h-4 w-4" /> Back
+        </Button>
+      </motion.div>
+
+      <MotionCard 
+        className="overflow-hidden glassmorphic rounded-2xl"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+      >
         <div className="grid md:grid-cols-2 gap-0">
-          <div className="relative aspect-[4/3] md:aspect-auto">
+          <motion.div 
+            className="relative aspect-[4/3] md:aspect-auto"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+          >
             <Image
               src={product.image}
               alt={product.name}
@@ -56,40 +86,49 @@ export default function ProductDetailsPage() {
               priority
             />
              {product.condition && (
-              <Badge variant={product.condition === 'New' ? 'default' : 'secondary'} className="absolute top-4 left-4 text-sm px-3 py-1">
+              <Badge variant={product.condition === 'New' ? 'default' : 'secondary'} className="absolute top-4 left-4 text-sm px-3 py-1 shadow-lg">
                 {product.condition}
               </Badge>
             )}
-          </div>
+          </motion.div>
 
-          <div className="p-6 md:p-10 flex flex-col">
+          <motion.div 
+            className="p-6 md:p-10 flex flex-col"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-3xl lg:text-4xl font-bold font-headline text-primary">{product.name}</CardTitle>
+              <motion.div variants={itemVariants}>
+                <CardTitle className="text-3xl lg:text-4xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">{product.name}</CardTitle>
+              </motion.div>
             </CardHeader>
 
             <CardContent className="p-0 flex-grow">
-              <p className="text-3xl font-semibold text-accent mb-6">${product.price.toFixed(2)}</p>
+              <motion.p variants={itemVariants} className="text-4xl font-semibold text-accent mb-6">${product.price.toFixed(2)}</motion.p>
               
-              <p className="text-foreground/80 leading-relaxed mb-6">{product.description}</p>
+              <motion.p variants={itemVariants} className="text-foreground/80 leading-relaxed mb-6">{product.description}</motion.p>
               
-              <h3 className="text-xl font-semibold mb-3 font-headline">Key Specifications:</h3>
-              <ul className="list-disc list-inside space-y-1.5 text-foreground/90 mb-8">
+              <motion.h3 variants={itemVariants} className="text-xl font-semibold mb-3 font-headline">Key Specifications:</motion.h3>
+              <motion.ul variants={itemVariants} className="list-disc list-inside space-y-1.5 text-foreground/90 mb-8">
                 {product.specs.map((spec, index) => (
                   <li key={index}>{spec}</li>
                 ))}
-              </ul>
+              </motion.ul>
             </CardContent>
 
-            <Separator className="my-6" />
+            <Separator className="my-6 bg-white/10" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
+            <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                    <ShoppingCart className="mr-2 h-5 w-5" /> Buy Now
-                  </Button>
+                   <motion.div className="w-full" whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg shadow-accent/20">
+                      <ShoppingCart className="mr-2 h-5 w-5" /> Buy Now
+                    </Button>
+                  </motion.div>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="glassmorphic">
                   <AlertDialogHeader>
                     <AlertDialogTitle>Contact to Purchase</AlertDialogTitle>
                     <AlertDialogDescription>
@@ -112,15 +151,17 @@ export default function ProductDetailsPage() {
                 </AlertDialogContent>
               </AlertDialog>
 
-              <Button size="lg" variant="outline" asChild className="w-full border-primary text-primary hover:bg-primary/10">
-                <Link href={`/exchange?model=${encodeURIComponent(product.name)}`}>
-                  <Repeat className="mr-2 h-5 w-5" /> Request Exchange
-                </Link>
-              </Button>
-            </div>
-          </div>
+              <motion.div className="w-full" whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button size="lg" variant="outline" asChild className="w-full border-primary text-primary hover:bg-primary/10">
+                  <Link href={`/exchange?model=${encodeURIComponent(product.name)}`}>
+                    <Repeat className="mr-2 h-5 w-5" /> Request Exchange
+                  </Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
-      </Card>
+      </MotionCard>
     </div>
   );
 }

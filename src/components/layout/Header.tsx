@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { Smartphone, Menu, X, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
+import { motion } from 'framer-motion';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -32,11 +33,10 @@ export function Header() {
 
   const ThemeToggleButton = ({ className, size = "icon" }: { className?: string, size?: "icon" | "default" }) => {
     if (!mounted) {
-      // Render a placeholder or null during server-side rendering and initial client-side hydration
       if (size === "icon") {
-        return <div className="h-10 w-10" />; // Placeholder for icon button
+        return <div className="h-10 w-10" />;
       }
-      return <div className="h-10 w-full" />; // Placeholder for full-width button
+      return <div className="h-10 w-full" />;
     }
     return (
       <Button
@@ -53,49 +53,35 @@ export function Header() {
     );
   };
   
-  const MobileMenuThemeToggle = () => {
-    if (!mounted) return null;
-    return (
-      <div className="mt-6 pt-6 border-t border-border">
-        <Button
-          variant="ghost"
-          className="w-full justify-start text-lg"
-          onClick={() => {
-            toggleTheme();
-            setIsMobileMenuOpen(false);
-          }}
-        >
-          {theme === 'dark' ? (
-            <Sun className="mr-2 h-5 w-5" />
-          ) : (
-            <Moon className="mr-2 h-5 w-5" />
-          )}
-          Switch to {theme === 'dark' ? 'Light' : 'Dark'} Mode
-        </Button>
-      </div>
-    );
-  }
-
 
   return (
-    <header className="bg-card shadow-md sticky top-0 z-50">
+    <header className="bg-background/70 backdrop-blur-xl shadow-sm sticky top-0 z-50 border-b border-white/10">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
+        <Link href="/" className="flex items-center gap-2 text-primary transition-transform duration-300 transform hover:scale-105">
           <Smartphone className="h-8 w-8" />
           <span className="text-2xl font-bold font-headline">MobiSwap</span>
         </Link>
 
         {/* Desktop Nav and Theme Toggle */}
         <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
-          <nav className="flex items-center space-x-2 lg:space-x-4">
+          <nav className="flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => (
               <Button key={item.href} variant="ghost" asChild
                 className={cn(
-                  "text-foreground hover:bg-accent hover:text-accent-foreground",
-                  pathname === item.href && "bg-accent text-accent-foreground"
+                  "text-foreground/80 hover:bg-secondary hover:text-secondary-foreground relative",
+                  pathname === item.href && "text-foreground font-semibold"
                 )}
               >
-                <Link href={item.href}>{item.label}</Link>
+                <Link href={item.href}>
+                  {item.label}
+                  {pathname === item.href && (
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent"
+                      layoutId="underline"
+                      initial={false}
+                    />
+                  )}
+                </Link>
               </Button>
             ))}
           </nav>
@@ -104,7 +90,7 @@ export function Header() {
 
         {/* Mobile Menu Trigger and inline Theme Toggle */}
         <div className="md:hidden flex items-center space-x-1">
-          <ThemeToggleButton size="icon" className="h-9 w-9" /> {/* Smaller toggle for mobile header bar */}
+          <ThemeToggleButton size="icon" className="h-9 w-9" />
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="h-9 w-9">
@@ -113,17 +99,13 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-full max-w-xs bg-card p-6">
+              <SheetTitle className="sr-only">Menu</SheetTitle>
+              <SheetDescription className="sr-only">Main navigation for mobile.</SheetDescription>
               <div className="flex justify-between items-center mb-6">
                 <Link href="/" className="flex items-center gap-2 text-primary" onClick={() => setIsMobileMenuOpen(false)}>
                   <Smartphone className="h-7 w-7" />
                   <span className="text-xl font-bold font-headline">MobiSwap</span>
                 </Link>
-                <SheetClose asChild>
-                  <Button variant="ghost" size="icon">
-                    <X className="h-6 w-6" />
-                    <span className="sr-only">Close menu</span>
-                  </Button>
-                </SheetClose>
               </div>
               <nav className="flex flex-col space-y-3">
                 {navItems.map((item) => (
@@ -141,7 +123,6 @@ export function Header() {
                   </SheetClose>
                 ))}
               </nav>
-              <MobileMenuThemeToggle />
             </SheetContent>
           </Sheet>
         </div>

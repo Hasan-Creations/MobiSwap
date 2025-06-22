@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { ProductCard } from '@/components/ProductCard';
 import { products as allProducts, Product } from '@/data/products';
 import { Input } from '@/components/ui/input';
-import { Search, ListFilter } from 'lucide-react';
+import { Search, ListFilter, ArrowDown, XCircle } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -13,13 +13,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+
+const INITIAL_LOAD_COUNT = 12;
+const LOAD_MORE_COUNT = 8;
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('featured'); // 'featured', 'price-asc', 'price-desc', 'name-asc'
   const [conditionFilter, setConditionFilter] = useState('all'); // 'all', 'New', 'Used - Like New', etc.
+  const [companyFilter, setCompanyFilter] = useState('all');
+  const [visibleCount, setVisibleCount] = useState(INITIAL_LOAD_COUNT);
 
   const conditions = ['all', 'New', 'Used - Like New', 'Used - Good', 'Used - Fair'];
+  const companies = ['all', ...Array.from(new Set(allProducts.map(p => p.company))).sort()];
 
 
   const filteredAndSortedProducts = useMemo(() => {
@@ -31,45 +38,93 @@ export default function ProductsPage() {
       filtered = filtered.filter(product => product.condition === conditionFilter);
     }
     
+    if (companyFilter !== 'all') {
+      filtered = filtered.filter(product => product.company === companyFilter);
+    }
+
+    const sorted = [...filtered];
+
     switch (sortOrder) {
       case 'price-asc':
-        filtered.sort((a, b) => a.price - b.price);
+        sorted.sort((a, b) => a.price - b.price);
         break;
       case 'price-desc':
-        filtered.sort((a, b) => b.price - a.price);
+        sorted.sort((a, b) => b.price - a.price);
         break;
       case 'name-asc':
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'featured':
       default:
-        // Basic featured sort: featured items first, then by name
-        filtered.sort((a,b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || a.name.localeCompare(b.name));
+        sorted.sort((a,b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || a.name.localeCompare(b.name));
         break;
     }
 
-    return filtered;
-  }, [searchTerm, sortOrder, conditionFilter]);
+    return sorted;
+  }, [searchTerm, sortOrder, conditionFilter, companyFilter]);
+  
+  const clearFilters = () => {
+    setSearchTerm('');
+    setSortOrder('featured');
+    setConditionFilter('all');
+    setCompanyFilter('all');
+    setVisibleCount(INITIAL_LOAD_COUNT);
+  }
+  
+  const hasActiveFilters = searchTerm || sortOrder !== 'featured' || conditionFilter !== 'all' || companyFilter !== 'all';
+
+
+  const visibleProducts = useMemo(() => {
+    return filteredAndSortedProducts.slice(0, visibleCount);
+  }, [filteredAndSortedProducts, visibleCount]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        ease: [0.34, 1.56, 0.64, 1]
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.5, transformOrigin: 'top center' },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.9, ease: [0.25, 1, 0.5, 1] },      
+    },
+  };
 
   return (
     <div className="space-y-10">
-      <section className="bg-primary/10 p-8 rounded-lg shadow">
-        <h1 className="text-4xl font-bold text-center mb-2 font-headline text-primary">Our Mobile Collection</h1>
+      <motion.section 
+        className="glassmorphic p-6 sm:p-8 rounded-2xl"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-4xl font-bold text-center mb-2 font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Our Mobile Collection</h1>
         <p className="text-center text-lg text-foreground/80 mb-8">Find the perfect phone that fits your needs and budget.</p>
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
           <div className="relative md:col-span-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               type="text"
               placeholder="Search phones..."
-              className="pl-10 w-full"
+              className="pl-10 w-full bg-background/80"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setVisibleCount(INITIAL_LOAD_COUNT);
+              }}
               aria-label="Search mobile phones"
             />
           </div>
-          <Select value={sortOrder} onValueChange={setSortOrder}>
-            <SelectTrigger className="w-full md:w-auto" aria-label="Sort products by">
+          <Select value={sortOrder} onValueChange={(value) => { setSortOrder(value); setVisibleCount(INITIAL_LOAD_COUNT); }}>
+            <SelectTrigger className="w-full md:w-auto bg-background/80" aria-label="Sort products by">
               <ListFilter className="h-4 w-4 mr-2 text-muted-foreground" />
               <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
@@ -80,8 +135,8 @@ export default function ProductsPage() {
               <SelectItem value="name-asc">Sort by: Name (A-Z)</SelectItem>
             </SelectContent>
           </Select>
-           <Select value={conditionFilter} onValueChange={setConditionFilter}>
-            <SelectTrigger className="w-full md:w-auto" aria-label="Filter by condition">
+           <Select value={conditionFilter} onValueChange={(value) => { setConditionFilter(value); setVisibleCount(INITIAL_LOAD_COUNT); }}>
+            <SelectTrigger className="w-full md:w-auto bg-background/80" aria-label="Filter by condition">
                <SelectValue placeholder="Filter by Condition" />
             </SelectTrigger>
             <SelectContent>
@@ -90,22 +145,72 @@ export default function ProductsPage() {
               ))}
             </SelectContent>
           </Select>
+           <Select value={companyFilter} onValueChange={(value) => { setCompanyFilter(value); setVisibleCount(INITIAL_LOAD_COUNT); }}>
+            <SelectTrigger className="w-full md:w-auto bg-background/80" aria-label="Filter by company">
+               <SelectValue placeholder="Filter by Company" />
+            </SelectTrigger>
+            <SelectContent>
+              {companies.map(company => (
+                <SelectItem key={company} value={company}>{company === 'all' ? 'All Companies' : company}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-      </section>
+         {hasActiveFilters && (
+          <div className="text-center mt-4">
+            <Button onClick={clearFilters} variant="ghost" className="text-accent hover:text-accent">
+              <XCircle className="mr-2 h-4 w-4"/>
+              Clear Filters
+            </Button>
+          </div>
+        )}
+      </motion.section>
 
-      {filteredAndSortedProducts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-          {filteredAndSortedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+      {visibleProducts.length > 0 ? (
+        <>
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
+            key={sortOrder + conditionFilter + companyFilter}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {visibleProducts.map((product) => (
+              <motion.div 
+                key={product.id}
+                variants={itemVariants}
+              >
+                <ProductCard product={product} />
+              </motion.div>
+            ))}
+          </motion.div>
+          {visibleCount < filteredAndSortedProducts.length && (
+            <div className="text-center mt-12">
+               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  onClick={() => setVisibleCount(prev => prev + LOAD_MORE_COUNT)}
+                  className="border-primary text-primary hover:bg-primary/10 transition-transform transform hover:scale-105"
+                >
+                  <ArrowDown className="mr-2 h-5 w-5" />
+                  Load More Phones
+                </Button>
+              </motion.div>
+            </div>
+          )}
+        </>
       ) : (
-        <div className="text-center py-16">
+        <motion.div 
+          className="text-center py-16"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
           <Search className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
           <h2 className="text-2xl font-semibold mb-2">No Phones Found</h2>
           <p className="text-muted-foreground">Try adjusting your search or filter criteria.</p>
-           <Button onClick={() => { setSearchTerm(''); setSortOrder('featured'); setConditionFilter('all');}} className="mt-4">Clear Filters</Button>
-        </div>
+           <Button onClick={clearFilters} className="mt-4">Clear Filters</Button>
+        </motion.div>
       )}
     </div>
   );
