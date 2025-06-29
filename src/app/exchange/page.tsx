@@ -39,7 +39,7 @@ const exchangeFormSchema = z.object({
   issues: z.string().max(300, "Description of issues must be at most 300 characters.").optional(),
   image: z.any().optional(), // For file uploads, actual handling would need more setup
   name: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name must be at most 50 characters."),
-  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Please enter a valid phone number."),
+  phone: z.string().regex(/^\d{11}$/, "Please enter a valid 11-digit phone number."),
   email: z.string().email("Please enter a valid email address."),
 });
 
@@ -98,7 +98,7 @@ export default function ExchangePage() {
           <div className="inline-block p-3 bg-primary/20 rounded-full mb-2 mx-auto">
             <Smartphone className="h-12 w-12 text-primary" />
           </div>
-          <CardTitle className="text-3xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Exchange Your Old Phone</CardTitle>
+          <CardTitle className="text-3xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-[#ff9100] via-[#e62c6d] to-[#b25aff]">Exchange Your Old Phone</CardTitle>
           <CardDescription className="text-lg text-muted-foreground">
             Fill out the form below to get an estimate for your old device.
           </CardDescription>

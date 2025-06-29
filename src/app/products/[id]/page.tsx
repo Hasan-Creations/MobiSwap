@@ -100,7 +100,7 @@ export default function ProductDetailsPage() {
           >
             <CardHeader className="p-0 mb-4">
               <motion.div variants={itemVariants}>
-                <CardTitle className="text-3xl lg:text-4xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">{product.name}</CardTitle>
+                <CardTitle className="text-3xl lg:text-4xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-[#ff9100] via-[#e62c6d] to-[#b25aff]">{product.name}</CardTitle>
               </motion.div>
             </CardHeader>
 

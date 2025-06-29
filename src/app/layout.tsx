@@ -4,6 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from "next-themes";
+import { FloatingActionButtons } from '@/components/FloatingActionButtons';
 
 export const metadata: Metadata = {
   title: 'MobiSwap - Buy, Sell, Exchange Mobile Phones',
@@ -16,11 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en" suppressHydrationWarning={true} className="!scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen bg-background text-foreground">
         <ThemeProvider
@@ -31,13 +32,14 @@ export default function RootLayout({
           >
           <div className="fixed top-0 left-0 w-full h-full -z-10">
             <div className="absolute top-0 left-0 w-full h-full bg-background" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-accent/0 to-background/0" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#ff9100]/20 via-[#e62c6d]/10 to-background/0" />
           </div>
           <Header />
           <main className="flex-grow container mx-auto px-4 py-8 z-10">
             {children}
           </main>
           <Footer />
+          <FloatingActionButtons />
           <Toaster />
         </ThemeProvider>
       </body>

@@ -12,7 +12,7 @@ export function Footer() {
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <Link href="/" className="flex items-center gap-2 mb-4 text-primary hover:text-primary/80 transition-colors">
             <Smartphone className="h-8 w-8" />
@@ -27,7 +27,7 @@ export function Footer() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <h3 className="text-lg font-semibold mb-4 font-headline text-primary">Quick Links</h3>
           <ul className="space-y-2 text-sm">
@@ -43,7 +43,7 @@ export function Footer() {
           initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <h3 className="text-lg font-semibold mb-4 font-headline text-primary">Contact Us</h3>
           <ul className="space-y-3 text-sm">

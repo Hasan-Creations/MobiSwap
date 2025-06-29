@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -69,7 +70,7 @@ export default function ProductsPage() {
     setConditionFilter('all');
     setCompanyFilter('all');
     setVisibleCount(INITIAL_LOAD_COUNT);
-  }
+  };
   
   const hasActiveFilters = searchTerm || sortOrder !== 'featured' || conditionFilter !== 'all' || companyFilter !== 'all';
 
@@ -77,17 +78,6 @@ export default function ProductsPage() {
   const visibleProducts = useMemo(() => {
     return filteredAndSortedProducts.slice(0, visibleCount);
   }, [filteredAndSortedProducts, visibleCount]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        ease: [0.34, 1.56, 0.64, 1]
-      },
-    },
-  };
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.5, transformOrigin: 'top center' },
@@ -106,7 +96,7 @@ export default function ProductsPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-4xl font-bold text-center mb-2 font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Our Mobile Collection</h1>
+        <h1 className="text-4xl font-bold text-center mb-2 font-headline bg-clip-text text-transparent bg-gradient-to-r from-[#ff9100] via-[#e62c6d] to-[#b25aff]">Our Mobile Collection</h1>
         <p className="text-center text-lg text-foreground/80 mb-8">Find the perfect phone that fits your needs and budget.</p>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
           <div className="relative md:col-span-1">
@@ -168,22 +158,21 @@ export default function ProductsPage() {
 
       {visibleProducts.length > 0 ? (
         <>
-          <motion.div 
+          <div 
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
-            key={sortOrder + conditionFilter + companyFilter}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
           >
             {visibleProducts.map((product) => (
               <motion.div 
                 key={product.id}
                 variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
               >
                 <ProductCard product={product} />
               </motion.div>
             ))}
-          </motion.div>
+          </div>
           {visibleCount < filteredAndSortedProducts.length && (
             <div className="text-center mt-12">
                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>

@@ -72,7 +72,7 @@ export default function ContactPage() {
         <div className="inline-block p-4 bg-primary/20 rounded-full mb-4">
           <Mail className="h-16 w-16 text-primary" />
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Get In Touch</h1>
+        <h1 className="text-4xl md:text-5xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-[#ff9100] via-[#e62c6d] to-[#b25aff]">Get In Touch</h1>
         <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
           We'd love to hear from you! Whether you have a question, feedback, or need support.
         </p>
@@ -84,7 +84,7 @@ export default function ContactPage() {
           variants={cardVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }}
         >
           <CardHeader>
             <CardTitle className="text-2xl font-headline flex items-center">
@@ -172,7 +172,7 @@ export default function ContactPage() {
           variants={cardVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.2 }}
         >
           <Card className="bg-background/60 backdrop-blur-lg border border-white/10 shadow-2xl">
             <CardHeader>
@@ -207,7 +207,7 @@ export default function ContactPage() {
           
           <div className="rounded-lg overflow-hidden shadow-2xl border border-white/10">
             <Image 
-              src="https://placehold.co/600x400.png"
+              src="/images/bg.png"
               alt="Contact us illustration"
               width={600}
               height={400}
