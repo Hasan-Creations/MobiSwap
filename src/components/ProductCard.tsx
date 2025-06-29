@@ -21,7 +21,7 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       <CardHeader className="p-0 relative">
         <Link href={`/products/${product.id}`} aria-label={`View details for ${product.name}`}>
-          <div className="aspect-[4/3] w-full overflow-hidden">
+          <div className="w-full overflow-hidden">
             <motion.div
               className="w-full h-full"
               whileHover={{ scale: 1.08 }}
@@ -30,7 +30,7 @@ export function ProductCard({ product }: ProductCardProps) {
               <Image
                 src={product.image}
                 alt={product.name}
-                width={600}
+                width={500}
                 height={400}
                 className="object-cover w-full h-full"
                 data-ai-hint={product.dataAiHint || "mobile phone"}
