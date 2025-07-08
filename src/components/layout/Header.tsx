@@ -55,7 +55,7 @@ export function Header() {
   
 
   return (
-    <header className="bg-background/70 backdrop-blur-xl shadow-sm sticky top-0 z-50 border-b border-white/10">
+    <header className="bg-background/70 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-white/10">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2 text-primary transition-transform duration-300 transform hover:scale-105">
           <Smartphone className="h-8 w-8" />
