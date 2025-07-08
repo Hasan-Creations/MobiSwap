@@ -207,7 +207,7 @@ export default function ContactPage() {
           
           <div className="rounded-lg overflow-hidden shadow-2xl border border-white/10">
             <Image 
-              src="/images/bg.png"
+              src="/cu.jpg"
               alt="Contact us illustration"
               width={600}
               height={400}
