@@ -206,15 +206,16 @@ export default function ContactPage() {
           </Card>
           
           <div className="rounded-lg overflow-hidden shadow-2xl border border-white/10">
-            <Image 
-              src="/images/cu.jpg"
-              alt="Contact us illustration"
-              width={600}
-              height={250}
-              className="w-full h-auto object-cover"
-              data-ai-hint="customer support team"
-            />
-          </div>
+  <Image 
+    src="/images/cu.jpg"
+    alt="Contact us illustration"
+    width={600}
+    height={304}
+    className="w-full h-[304px] object-cover"
+    data-ai-hint="customer support team"
+  />
+</div>
+
         </motion.div>
       </div>
     </div>
