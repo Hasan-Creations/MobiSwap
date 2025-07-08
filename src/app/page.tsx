@@ -60,15 +60,15 @@ const HomePage = () => {
           <motion.div
             className="relative pt-12 aspect-[4/3] md:aspect-square"
             initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            whileInView={{ opacity: 1, scale: 1.2 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           >
             <Image
-              src="/images/bg.png"
+              src="/images/bg.webp"
               alt="A collection of modern smartphones"
-              width={800}
-              height={800}
+              width={900}
+              height={1000}
               className="object-contain"
               priority
             />
