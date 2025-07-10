@@ -15,8 +15,7 @@ export function Footer() {
           viewport={{ once: false }}
         >
           <Link href="/" className="flex items-center gap-2 mb-4 text-primary hover:text-primary/80 transition-colors">
-            <Smartphone className="h-8 w-8" />
-            <span className="text-2xl font-bold font-headline">MobiSwap</span>
+            <span className="text-2xl font-bold font-headline"><img src="/favicon.ico" alt=""/></span>
           </Link>
           <p className="text-sm text-muted-foreground">
             Your trusted partner for buying, selling, and exchanging mobile phones. Quality devices, unbeatable prices.
@@ -57,7 +56,7 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-3">
               <Mail className="h-5 w-5 text-primary shrink-0" />
-              <a href="mailto:info@mobiswap.com" className="hover:text-primary transition-colors text-muted-foreground">info@mobiswap.com</a>
+              <a target='blank' href="mailto:hasanayub106@gmail.com" className="hover:text-primary transition-colors text-muted-foreground">info@mobiswap.com</a>
             </li>
           </ul>
           <div className="flex space-x-4 mt-6">

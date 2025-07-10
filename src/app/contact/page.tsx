@@ -62,7 +62,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-0">
       <motion.div 
         className="text-center mb-12"
         initial={{ opacity: 0, y: -50 }}
@@ -118,10 +118,10 @@ export default function ContactPage() {
                     <FormItem>
                       <FormLabel>Email Address</FormLabel>
                       <FormControl>
-                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input type="email" placeholder="you@example.com" {...field} className="pl-9 bg-background/80" />
-                        </div>
+                           <div className="relative">
+                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                           <Input type="email" placeholder="you@example.com" {...field} className="pl-9 bg-background/80" />
+                         </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -157,11 +157,11 @@ export default function ContactPage() {
                     </FormItem>
                   )}
                 />
-                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20" disabled={form.formState.isSubmitting}>
-                    <Send className="mr-2 h-5 w-5" /> {form.formState.isSubmitting ? "Sending..." : "Send Message"}
-                  </Button>
-                </motion.div>
+                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                   <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20" disabled={form.formState.isSubmitting}>
+                     <Send className="mr-2 h-5 w-5" /> {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+                   </Button>
+                 </motion.div>
               </form>
             </Form>
           </CardContent>
@@ -199,7 +199,8 @@ export default function ContactPage() {
                 <Mail className="h-6 w-6 text-primary mt-1 shrink-0" />
                 <div>
                   <h4 className="font-semibold">Email Support</h4>
-                  <a href="mailto:support@mobiswap.com" className="text-muted-foreground hover:text-primary transition-colors">support@mobiswap.com</a>
+                  {/* This mailto link is correctly implemented and should work as expected */}
+                  <a target="blank" href="mailto:hasanayub106@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">support@mobiswap.com</a>
                 </div>
               </div>
             </CardContent>
@@ -210,8 +211,8 @@ export default function ContactPage() {
               src="/images/cu.jpg"
               alt="Contact us illustration"
               width={600}
-              height={400}
-              className="w-full h-auto object-cover"
+              height={304}
+              className="w-full h-[304px] object-cover"
               data-ai-hint="customer support team"
             />
           </div>

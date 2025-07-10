@@ -188,7 +188,7 @@ const HomePage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.15 }}
               viewport={{ once: false }}
-              className="flex"
+              className="flex cursor-pointer" 
             >
               <ReviewCard review={review} />
             </motion.div>

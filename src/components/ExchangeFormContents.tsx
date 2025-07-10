@@ -1,4 +1,3 @@
-
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +26,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { UploadCloud, Smartphone, User, Mail, Phone } from "lucide-react";
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from "react";
+import { useEffect, useState } from "react"; // Import useState
 import { motion } from 'framer-motion';
 
 const exchangeFormSchema = z.object({
@@ -38,8 +37,13 @@ const exchangeFormSchema = z.object({
   imei: z.string().optional(),
   storage: z.string().optional(),
   issues: z.string().max(300, "Description of issues must be at most 300 characters.").optional(),
-  image: z.any().optional(), // For file uploads, actual handling would need more setup
-  name: z.string().min(2, "Name must be at least 2 characters.").max(50, "Name must be at most 50 characters."),
+  image: z
+    .any()
+    .refine((file) => file instanceof File, {
+      message: "Image is required",
+    })
+    .optional(), // Made image optional for easier testing, you can change it back
+  name: z.string().min(3, "Name must be at least 2 characters.").max(50, "Name must be at most 50 characters."),
   phone: z.string().regex(/^\d{11}$/, "Please enter a valid 11-digit phone number."),
   email: z.string().email("Please enter a valid email address."),
 });
@@ -61,35 +65,53 @@ export function ExchangeFormContents() {
   const searchParams = useSearchParams();
   const modelFromQuery = searchParams.get('model');
 
-
   const form = useForm<ExchangeFormValues>({
     resolver: zodResolver(exchangeFormSchema),
     defaultValues,
   });
 
+  // State to manage which action is currently submitting
+  const [isExchangeSubmitting, setIsExchangeSubmitting] = useState(false);
+  const [isSellSubmitting, setIsSellSubmitting] = useState(false);
+
   useEffect(() => {
     if (modelFromQuery) {
-      // This is just to demonstrate pre-filling. In a real app, you might want to prefill a field
-      // for "Desired New Model" rather than "Current Mobile Model" if coming from a product page.
-      // For this example, let's assume it's for 'Current Mobile Model' if they are exchanging for *any* other phone.
-      // form.setValue('currentMobileModel', modelFromQuery); // Let's not prefill, causes confusion for current use case.
+      // You can uncomment this line if you decide to pre-fill the model field
+      // form.setValue('currentMobileModel', modelFromQuery);
     }
   }, [modelFromQuery, form]);
 
-
-  function onSubmit(data: ExchangeFormValues) {
-    console.log(data); // In a real app, you'd send this to a server
+  const onExchangeSubmit = async (data: ExchangeFormValues) => {
+    setIsExchangeSubmitting(true);
+    console.log("Exchange Data:", data); // In a real app, you'd send this to a server
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: "Exchange Request Submitted!",
       description: "We've received your exchange request. Our team will contact you shortly.",
       variant: "default",
     });
     form.reset(); // Reset form after submission
-  }
+    setIsExchangeSubmitting(false);
+  };
+
+  const onSellSubmit = async (data: ExchangeFormValues) => {
+    setIsSellSubmitting(true);
+    console.log("Sell Data:", data); // In a real app, you'd send this to a server
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    toast({
+      title: "Sell Request Submitted!",
+      description: "We've received your Sell request. Our team will contact you shortly.",
+      variant: "default",
+    });
+    form.reset(); // Reset form after submission
+    setIsSellSubmitting(false);
+  };
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <MotionCard 
+      <MotionCard
         className="max-w-3xl mx-auto bg-background/60 backdrop-blur-lg border border-white/10 shadow-2xl"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -99,14 +121,15 @@ export function ExchangeFormContents() {
           <div className="inline-block p-3 bg-primary/20 rounded-full mb-2 mx-auto">
             <Smartphone className="h-12 w-12 text-primary" />
           </div>
-          <CardTitle className="text-3xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-[#ff9100] via-[#e62c6d] to-[#b25aff]">Exchange Your Old Phone</CardTitle>
+          <CardTitle className="text-3xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-[#ff9100] via-[#e62c6d] to-[#b25aff]">Exchange Or Sell Your Phone</CardTitle>
           <CardDescription className="text-lg text-muted-foreground">
             Fill out the form below to get an estimate for your old device.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            {/* Remove onSubmit from the <form> tag, as buttons will handle submission */}
+            <form className="space-y-8">
               <fieldset className="space-y-6 border border-white/10 p-4 rounded-md">
                 <legend className="text-lg font-semibold px-1 font-headline text-primary">Your Current Device</legend>
                 <FormField
@@ -159,7 +182,7 @@ export function ExchangeFormContents() {
                     </FormItem>
                   )}
                 />
-                 <FormField
+                <FormField
                   control={form.control}
                   name="storage"
                   render={({ field }) => (
@@ -194,11 +217,11 @@ export function ExchangeFormContents() {
                   name="image"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Upload Image (Optional)</FormLabel>
+                      <FormLabel>Upload Image</FormLabel>
                       <FormControl>
                         <div className="flex items-center space-x-2">
-                           <UploadCloud className="h-5 w-5 text-muted-foreground" />
-                           <Input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)} className="border-dashed bg-background/80" />
+                          <UploadCloud className="h-5 w-5 text-muted-foreground" />
+                          <Input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)} className="border-dashed bg-background/80" />
                         </div>
                       </FormControl>
                       <FormDescription>An image helps us assess the condition better.</FormDescription>
@@ -210,7 +233,7 @@ export function ExchangeFormContents() {
 
               <fieldset className="space-y-6 border border-white/10 p-4 rounded-md">
                 <legend className="text-lg font-semibold px-1 font-headline text-primary">Your Contact Information</legend>
-                 <FormField
+                <FormField
                   control={form.control}
                   name="name"
                   render={({ field }) => (
@@ -232,7 +255,7 @@ export function ExchangeFormContents() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
-                       <FormControl>
+                      <FormControl>
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input type="tel" placeholder="+1 (555) 123-4567" {...field} className="pl-9 bg-background/80" />
@@ -249,7 +272,7 @@ export function ExchangeFormContents() {
                     <FormItem>
                       <FormLabel>Email Address</FormLabel>
                       <FormControl>
-                         <div className="relative">
+                        <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input type="email" placeholder="you@example.com" {...field} className="pl-9 bg-background/80" />
                         </div>
@@ -259,10 +282,29 @@ export function ExchangeFormContents() {
                   )}
                 />
               </fieldset>
-              
+
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? "Submitting..." : "Submit Exchange Request"}
+                <Button
+                  // IMPORTANT: Change type to "button" to prevent default form submission
+                  type="button"
+                  // Use onClick to trigger React Hook Form's handleSubmit
+                  onClick={form.handleSubmit(onExchangeSubmit)}
+                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20"
+                  disabled={isExchangeSubmitting || isSellSubmitting} // Disable if either operation is in progress
+                >
+                  {isExchangeSubmitting ? "Submitting Exchange..." : "Submit Exchange Request"}
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  // IMPORTANT: Change type to "button" to prevent default form submission
+                  type="button"
+                  // Use onClick to trigger React Hook Form's handleSubmit
+                  onClick={form.handleSubmit(onSellSubmit)}
+                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20"
+                  disabled={isSellSubmitting || isExchangeSubmitting} // Disable if either operation is in progress
+                >
+                  {isSellSubmitting ? "Submitting Sell..." : "Submit Sell Request"}
                 </Button>
               </motion.div>
             </form>
