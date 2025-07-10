@@ -211,7 +211,7 @@ export default function ContactPage() {
               src="/images/cu.jpg"
               alt="Contact us illustration"
               width={600}
-              height={304}
+              height={400}
               className="w-full h-[304px] object-cover"
               data-ai-hint="customer support team"
             />
