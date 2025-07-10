@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { UploadCloud, Smartphone, User, Mail, Phone } from "lucide-react";
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from "react"; // Import useState
+import { useEffect, useState } from "react";
 import { motion } from 'framer-motion';
 
 const exchangeFormSchema = z.object({
@@ -40,11 +41,10 @@ const exchangeFormSchema = z.object({
   image: z
     .any()
     .refine((file) => file instanceof File, {
-      message: "Image is required",
-    })
-    .optional(), // Made image optional for easier testing, you can change it back
+      message: "An image of your phone is required.",
+    }),
   name: z.string().min(3, "Name must be at least 2 characters.").max(50, "Name must be at most 50 characters."),
-  phone: z.string().regex(/^\d{11}$/, "Please enter a valid 11-digit phone number."),
+  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Please enter a valid phone number."),
   email: z.string().email("Please enter a valid email address."),
 });
 
@@ -70,42 +70,38 @@ export function ExchangeFormContents() {
     defaultValues,
   });
 
-  // State to manage which action is currently submitting
   const [isExchangeSubmitting, setIsExchangeSubmitting] = useState(false);
   const [isSellSubmitting, setIsSellSubmitting] = useState(false);
 
   useEffect(() => {
     if (modelFromQuery) {
-      // You can uncomment this line if you decide to pre-fill the model field
-      // form.setValue('currentMobileModel', modelFromQuery);
+      form.setValue('currentMobileModel', modelFromQuery);
     }
   }, [modelFromQuery, form]);
 
   const onExchangeSubmit = async (data: ExchangeFormValues) => {
     setIsExchangeSubmitting(true);
-    console.log("Exchange Data:", data); // In a real app, you'd send this to a server
-    // Simulate API call
+    console.log("Exchange Data:", data); 
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: "Exchange Request Submitted!",
       description: "We've received your exchange request. Our team will contact you shortly.",
       variant: "default",
     });
-    form.reset(); // Reset form after submission
+    form.reset(); 
     setIsExchangeSubmitting(false);
   };
 
   const onSellSubmit = async (data: ExchangeFormValues) => {
     setIsSellSubmitting(true);
-    console.log("Sell Data:", data); // In a real app, you'd send this to a server
-    // Simulate API call
+    console.log("Sell Data:", data); 
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: "Sell Request Submitted!",
       description: "We've received your Sell request. Our team will contact you shortly.",
       variant: "default",
     });
-    form.reset(); // Reset form after submission
+    form.reset(); 
     setIsSellSubmitting(false);
   };
 
@@ -128,7 +124,6 @@ export function ExchangeFormContents() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            {/* Remove onSubmit from the <form> tag, as buttons will handle submission */}
             <form className="space-y-8">
               <fieldset className="space-y-6 border border-white/10 p-4 rounded-md">
                 <legend className="text-lg font-semibold px-1 font-headline text-primary">Your Current Device</legend>
@@ -224,7 +219,7 @@ export function ExchangeFormContents() {
                           <Input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)} className="border-dashed bg-background/80" />
                         </div>
                       </FormControl>
-                      <FormDescription>An image helps us assess the condition better.</FormDescription>
+                      <FormDescription>An image is required to assess the condition.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -283,30 +278,28 @@ export function ExchangeFormContents() {
                 />
               </fieldset>
 
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                  // IMPORTANT: Change type to "button" to prevent default form submission
-                  type="button"
-                  // Use onClick to trigger React Hook Form's handleSubmit
-                  onClick={form.handleSubmit(onExchangeSubmit)}
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20"
-                  disabled={isExchangeSubmitting || isSellSubmitting} // Disable if either operation is in progress
-                >
-                  {isExchangeSubmitting ? "Submitting Exchange..." : "Submit Exchange Request"}
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                  // IMPORTANT: Change type to "button" to prevent default form submission
-                  type="button"
-                  // Use onClick to trigger React Hook Form's handleSubmit
-                  onClick={form.handleSubmit(onSellSubmit)}
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20"
-                  disabled={isSellSubmitting || isExchangeSubmitting} // Disable if either operation is in progress
-                >
-                  {isSellSubmitting ? "Submitting Sell..." : "Submit Sell Request"}
-                </Button>
-              </motion.div>
+              <div className="space-y-4">
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    type="button"
+                    onClick={form.handleSubmit(onExchangeSubmit)}
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-lg shadow-lg shadow-primary/20"
+                    disabled={isExchangeSubmitting || isSellSubmitting}
+                  >
+                    {isExchangeSubmitting ? "Submitting Exchange..." : "Submit Exchange Request"}
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    type="button"
+                    onClick={form.handleSubmit(onSellSubmit)}
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20"
+                    disabled={isSellSubmitting || isExchangeSubmitting}
+                  >
+                    {isSellSubmitting ? "Submitting Sell..." : "Submit Sell Request"}
+                  </Button>
+                </motion.div>
+              </div>
             </form>
           </Form>
         </CardContent>
