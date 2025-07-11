@@ -43,7 +43,7 @@ const exchangeFormSchema = z.object({
     .refine((file) => file instanceof File, {
       message: "An image of your phone is required.",
     }),
-  name: z.string().min(3, "Name must be at least 2 characters.").max(50, "Name must be at most 50 characters."),
+  name: z.string().min(3, "Name must be at least 3 characters.").max(50, "Name must be at most 50 characters."),
   phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Please enter a valid phone number."),
   email: z.string().email("Please enter a valid email address."),
 });
@@ -106,7 +106,7 @@ export function ExchangeFormContents() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-0">
       <MotionCard
         className="max-w-3xl mx-auto bg-background/60 backdrop-blur-lg border border-white/10 shadow-2xl"
         initial={{ opacity: 0, y: 50 }}

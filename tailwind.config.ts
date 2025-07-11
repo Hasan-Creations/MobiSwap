@@ -17,9 +17,15 @@ export default {
     },
     extend: {
       fontFamily: {
-        body: ['PT Sans', 'sans-serif'],
-        headline: ['PT Sans', 'sans-serif'],
-        code: ['monospace'],
+        lato: ['Lato', 'sans-serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        raleway: ['Raleway', 'sans-serif'],
+        robotoSlab: ['"Roboto Slab"', 'serif'],
+        sora: ['Sora', 'sans-serif'],
+        body: ['Poppins', 'sans-serif'],       // Example default body
+        headline: ['Montserrat', 'sans-serif'],// Example default headline
+        code: ['monospace'],                   // Leave as is
       },
       colors: {
         border: "hsl(var(--border))",
