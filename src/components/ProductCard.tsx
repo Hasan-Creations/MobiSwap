@@ -16,7 +16,8 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -5, boxShadow: "0px 10px 20px hsla(var(--accent) / 0.1)" }}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
       className="group flex flex-col overflow-hidden glassmorphic rounded-2xl h-full"
     >
       <CardHeader className="p-0 relative">
@@ -49,7 +50,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </Link>
         </CardTitle>
         <CardDescription className="text-2xl font-semibold text-primary mb-3">
-          ${product.price.toFixed(2)}
+          PKR {product.price.toLocaleString()}
         </CardDescription>
         <p className="text-sm text-muted-foreground line-clamp-2 flex-grow">
           {product.description}

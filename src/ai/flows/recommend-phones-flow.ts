@@ -34,15 +34,15 @@ const recommendationPrompt = ai.definePrompt({
   name: 'recommendPhonePrompt',
   input: { schema: z.object({ query: z.string(), productsJson: z.string() }) },
   output: { schema: RecommendPhonesOutputSchema },
-  prompt: `You are an expert mobile phone salesman at MobiSwap.
+  prompt: `You are an expert mobile phone salesman at MobiSwap in Pakistan.
 A customer has a request. Your goal is to recommend up to 3 phones from the available list that best fit the customer's needs.
 Analyze the user's query and compare it against the provided list of products.
-Consider all aspects of the query: price, features (like camera quality, battery life, durability), intended use (like gaming, hiking, photography), and brand preferences.
+Consider all aspects of the query: price (in PKR), features (like camera quality, battery life, durability), intended use (like gaming, hiking, photography), and brand preferences.
 Return only an array of the product IDs for your top recommendations. Do not return more than 3 IDs.
 
 Customer Query: {{{query}}}
 
-Available Products (JSON format):
+Available Products (JSON format with prices in PKR):
 {{{productsJson}}}
 `,
 });

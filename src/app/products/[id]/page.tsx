@@ -105,7 +105,7 @@ export default function ProductDetailsPage() {
             </CardHeader>
 
             <CardContent className="p-0 flex-grow">
-              <motion.p variants={itemVariants} className="text-4xl font-semibold text-accent mb-6">${product.price.toFixed(2)}</motion.p>
+              <motion.p variants={itemVariants} className="text-4xl font-semibold text-accent mb-6">PKR {product.price.toLocaleString()}</motion.p>
               
               <motion.p variants={itemVariants} className="text-foreground/80 leading-relaxed mb-6">{product.description}</motion.p>
               
@@ -119,7 +119,7 @@ export default function ProductDetailsPage() {
 
             <Separator className="my-6 bg-white/10" />
 
-            <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto">
+            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-auto">
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                    <motion.div className="w-full" whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
