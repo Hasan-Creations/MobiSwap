@@ -24,11 +24,11 @@
     --input: 240 5% 88%;
     --ring: 34 100% 50%;
     --radius: 0.8rem;
-    --chart-1: 46 100% 50%;
-    --chart-2: 338 80% 54%;
-    --chart-3: 17 100% 53%;
-    --chart-4: 46 100% 50%;
-    --chart-5: 17 100% 53%;
+    --chart-1: 45 90% 50%;
+    --chart-2: 263 70% 65%;
+    --chart-3: 13 95% 52%;
+    --chart-4: 34 100% 50%;
+    --chart-5: 332 78% 60%;
     --sidebar-background: 240 5% 94%;
     --sidebar-foreground: 240 5% 10%;
     --sidebar-primary: 34 100% 50%;
@@ -61,11 +61,11 @@
     --border: 240 5% 25%;
     --input: 240 5% 25%;
     --ring: 34 100% 50%;
-    --chart-1: 46 100% 50%;
-    --chart-2: 338 80% 54%;
-    --chart-3: 17 100% 53%;
-    --chart-4: 46 100% 50%;
-    --chart-5: 17 100% 53%;
+    --chart-1: 45 90% 50%;
+    --chart-2: 263 70% 65%;
+    --chart-3: 13 95% 52%;
+    --chart-4: 34 100% 50%;
+    --chart-5: 332 78% 60%;
     --sidebar-background: 240 5% 12%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 34 100% 50%;
@@ -77,15 +77,15 @@
     --primary-bold: 34 100% 55%;
     --accent-bold: 275 100% 72%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
+    transition: color, background-color, border-color 0.5s ease-in-out;
   }
+  
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(circle at top left, hsl(35 100% 50% / 0.05), transparent 30%), radial-gradient(circle at bottom right, hsl(338 80% 54% / 0.05), transparent 30%);
+    background-image: radial-gradient(circle at top left, hsl(var(--primary) / 0.05), transparent 30%), radial-gradient(circle at bottom right, hsl(var(--accent) / 0.05), transparent 30%);
     font-feature-settings: "rlig" 1, "calt" 1;
     min-height: 100vh;
     overflow-x: hidden;
@@ -94,6 +94,6 @@
 
 @layer components {
   .glassmorphic {
-    @apply bg-background/60 backdrop-blur-lg border border-white/10 shadow-2xl;
+    @apply bg-background/60 backdrop-blur-lg border border-white/10;
   }
 }

@@ -137,12 +137,12 @@ export default function ProductDetailsPage() {
                   </AlertDialogHeader>
                   <AlertDialogFooter className="sm:flex-col items-center gap-3">
                     <Button asChild className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white">
-                      <a href={`https://wa.me/1234567890?text=I'm interested in buying the ${product.name}`} target="_blank" rel="noopener noreferrer">
+                      <a href={`https://wa.me/923292599756?text=I'm interested in buying the ${product.name}`} target="_blank" rel="noopener noreferrer">
                          <MessageSquare className="mr-2 h-4 w-4" /> WhatsApp
                       </a>
                     </Button>
                     <Button asChild className="w-full sm:w-auto" variant="outline">
-                      <a href={`mailto:sales@mobiswap.com?subject=Inquiry about ${product.name}`}>
+                      <a href={`mailto:hasanayub106@gmail.com?subject=Inquiry about ${product.name}`}>
                          Email Us
                       </a>
                     </Button>

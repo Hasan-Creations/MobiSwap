@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -32,9 +33,10 @@ export function Footer() {
           <ul className="space-y-2 text-sm">
             <li><Link href="/products" className="hover:text-primary transition-all inline-block hover:translate-x-1">All Mobiles</Link></li>
             <li><Link href="/exchange" className="hover:text-primary transition-all inline-block hover:translate-x-1">Exchange Your Phone</Link></li>
+            <li><Link href="/about" className="hover:text-primary transition-all inline-block hover:translate-x-1">About Us</Link></li>
             <li><Link href="/contact" className="hover:text-primary transition-all inline-block hover:translate-x-1">Contact Us</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-all inline-block hover:translate-x-1">Terms of Service</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-all inline-block hover:translate-x-1">Privacy Policy</Link></li>
+            <li><Link href="/terms-of-service" className="hover:text-primary transition-all inline-block hover:translate-x-1">Terms of Service</Link></li>
+            <li><Link href="/privacy-policy" className="hover:text-primary transition-all inline-block hover:translate-x-1">Privacy Policy</Link></li>
           </ul>
         </motion.div>
 
@@ -48,15 +50,15 @@ export function Footer() {
           <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-primary shrink-0" />
-              <span className="text-muted-foreground">123 Tech Street, Silicon Valley, CA 94000</span>
+              <span className="text-muted-foreground">Suite # 202-203, Main Shahra-e-Faisal Karachi</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="h-5 w-5 text-primary shrink-0" />
-              <a href="tel:+1234567890" className="hover:text-primary transition-colors text-muted-foreground">+1 (234) 567-890</a>
+              <a href="tel:03292599756" className="hover:text-primary transition-colors text-muted-foreground">03292599756</a>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="h-5 w-5 text-primary shrink-0" />
-              <a target='blank' href="mailto:hasanayub106@gmail.com" className="hover:text-primary transition-colors text-muted-foreground">info@mobiswap.com</a>
+              <a target='blank' href="mailto:hasanayub106@gmail.com" className="hover:text-primary transition-colors text-muted-foreground">hasanayub106@gmail.com</a>
             </li>
           </ul>
           <div className="flex space-x-4 mt-6">

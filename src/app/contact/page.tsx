@@ -185,22 +185,21 @@ export default function ContactPage() {
                 <MapPin className="h-6 w-6 text-primary mt-1 shrink-0" />
                 <div>
                   <h4 className="font-semibold">Our Office</h4>
-                  <p className="text-muted-foreground">123 Tech Street, Silicon Valley, CA 94000, USA</p>
+                  <p className="text-muted-foreground">Suite # 202-203, Main Shahra-e-Faisal Karachi</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <Phone className="h-6 w-6 text-primary mt-1 shrink-0" />
                 <div>
                   <h4 className="font-semibold">Phone Support</h4>
-                  <a href="tel:+1234567890" className="text-muted-foreground hover:text-primary transition-colors">+1 (234) 567-890</a>
+                  <a href="tel:03292599756" className="text-muted-foreground hover:text-primary transition-colors">03292599756</a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <Mail className="h-6 w-6 text-primary mt-1 shrink-0" />
                 <div>
                   <h4 className="font-semibold">Email Support</h4>
-                  {/* This mailto link is correctly implemented and should work as expected */}
-                  <a target="blank" href="mailto:hasanayub106@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">support@mobiswap.com</a>
+                  <a target="blank" href="mailto:hasanayub106@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">hasanayub106@gmail.com</a>
                 </div>
               </div>
             </CardContent>
@@ -211,7 +210,7 @@ export default function ContactPage() {
               src="/images/cu.jpg"
               alt="Contact us illustration"
               width={600}
-              height={400}
+              height={304}
               className="w-full h-[304px] object-cover"
               data-ai-hint="customer support team"
             />

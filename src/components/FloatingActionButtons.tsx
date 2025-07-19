@@ -47,12 +47,9 @@ export function FloatingActionButtons() {
         };
     }, []);
     
-    // The height of the "Scroll to Top" button (h-12 = 48px) plus a 16px gap.
     const whatsAppShift = -64; 
 
     return (
-        // This container creates a positioning context and has a fixed height
-        // to contain both buttons, preventing layout shifts from interfering with animations.
         <div className="fixed bottom-6 right-6 z-50 h-32 w-12">
             <motion.div
                 className="absolute bottom-0 right-0"
@@ -60,7 +57,7 @@ export function FloatingActionButtons() {
                 transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
                  <a
-                    href="https://wa.me/+923292599756?text=Hello!%20I'm%20interested%20in%20your%20products."
+                    href="https://wa.me/923292599756?text=Hello!%20I'm%20interested%20in%20your%20products."
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Chat on WhatsApp"

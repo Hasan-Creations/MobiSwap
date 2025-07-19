@@ -14,7 +14,7 @@ export function IconTextCard({ icon: Icon, title, description }: IconTextCardPro
   return (
     <motion.div
       whileHover={{ y: -8, scale: 1.05 }}
-      transition={{ type: 'spring', stiffness: 300 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
     >
       <Card className="group text-center shadow-lg transition-all duration-300 rounded-lg bg-transparent border-none">
         <CardHeader className="flex flex-col items-center pb-2">
