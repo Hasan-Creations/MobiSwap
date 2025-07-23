@@ -42,7 +42,7 @@ export default function AboutPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 space-y-20">
+        <div className="container mx-auto px-4 py-0 space-y-20">
             {/* Hero Section */}
             <motion.section 
                 className="text-center"
@@ -80,7 +80,7 @@ export default function AboutPage() {
             >
                 <motion.div variants={itemVariants}>
                     <Image
-                        src="/about.png"
+                        src="/images/au.png"
                         alt="Diverse group of people using mobile phones"
                         width={600}
                         height={400}
