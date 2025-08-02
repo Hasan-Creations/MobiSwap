@@ -1,11 +1,3 @@
-// The text you provided appears to be a detailed documentation or overview of the MobiSwap
-// application. It includes information about the project overview, the tech stack used, project
-// structure, and key features of different sections of the application like the homepage, product
-// listing, product details, exchange request form, contact page, and AI phone finder.
-// The text you provided seems to be a detailed documentation or overview of the MobiSwap application.
-// It includes information about the project overview, the tech stack used, project structure, key
-// features of different sections of the application like the homepage, product listing, product
-// details, exchange request form, contact page, and AI phone finder.
 # MobiSwap Application Documentation
 
 ## 1. Project Overview

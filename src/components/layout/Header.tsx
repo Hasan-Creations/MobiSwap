@@ -2,14 +2,16 @@
 "use client";
 
 import Link from 'next/link';
-import { Smartphone, Menu, X, Sun, Moon } from 'lucide-react';
+import { Smartphone, Menu, X, Sun, Moon, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle, SheetDescription } from '@/components/ui/sheet';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { CartContext } from '@/context/CartContext';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -24,6 +26,8 @@ export function Header() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { cart } = useContext(CartContext);
+  const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0);
 
   useEffect(() => {
     setMounted(true);
@@ -54,17 +58,25 @@ export function Header() {
       </Button>
     );
   };
-  
+
 
   return (
     <header className="bg-background/70 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-white/10">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2 text-primary transition-transform duration-300 transform hover:scale-105">
-          <span className="text-2xl font-bold font-headline"><img src="/favicon.ico" alt="" /></span>
-        </Link>
+      <div className="container mx-auto flex items-center justify-between">
 
-        {/* Desktop Nav and Theme Toggle */}
-        <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+        {/* Left: Logo (smaller padding, bigger logo) */}
+        <div className="px-4">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-primary transition-transform duration-300 transform hover:scale-105"
+          >
+            <Image src="/icon.png" alt="MobiSwap logo" width={48} height={48} />
+            <span className="text-2xl font-bold font-headline">MobiSwap</span>
+          </Link>
+        </div>
+
+        {/* Right: Desktop Nav + Cart + Theme Toggle */}
+        <div className="hidden md:flex items-center space-x-2 lg:space-x-4 px-4 py-4">
           <nav className="flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => (
               <Button key={item.href} variant="ghost" asChild
@@ -86,11 +98,33 @@ export function Header() {
               </Button>
             ))}
           </nav>
-          <ThemeToggleButton />
+          <div className="flex items-center space-x-1">
+            <Link href="/cart">
+              <Button variant="ghost" size="icon" className="relative rounded-full">
+                <ShoppingCart className="h-5 w-5" />
+                {mounted && cartItemCount > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-accent-foreground text-xs font-bold">
+                    {cartItemCount}
+                  </span>
+                )}
+              </Button>
+            </Link>
+            <ThemeToggleButton />
+          </div>
         </div>
 
-        {/* Mobile Menu Trigger and inline Theme Toggle */}
-        <div className="md:hidden flex items-center space-x-1">
+        {/* Mobile Nav: Cart + Toggle + Menu */}
+        <div className="md:hidden flex items-center space-x-1 px-4 py-4">
+          <Link href="/cart">
+            <Button variant="ghost" size="icon" className="relative h-9 w-9">
+              <ShoppingCart className="h-5 w-5" />
+              {mounted && cartItemCount > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-accent-foreground text-xs font-bold">
+                  {cartItemCount}
+                </span>
+              )}
+            </Button>
+          </Link>
           <ThemeToggleButton size="icon" className="h-9 w-9" />
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
@@ -103,24 +137,28 @@ export function Header() {
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <SheetDescription className="sr-only">Main navigation for mobile.</SheetDescription>
               <div className="flex justify-between items-center mb-6">
-                <Link href="/" className="flex items-center gap-2 text-primary" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Smartphone className="h-7 w-7" />
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 text-primary"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Image src="/logo.png" alt="MobiSwap logo" width={28} height={28} />
                   <span className="text-xl font-bold font-headline">MobiSwap</span>
                 </Link>
               </div>
               <nav className="flex flex-col space-y-3">
                 {navItems.map((item) => (
                   <SheetClose key={item.href} asChild>
-                     <Link 
-                        href={item.href} 
-                        className={cn(
-                          "block py-2 px-3 rounded-md text-lg hover:bg-accent hover:text-accent-foreground transition-colors",
-                          pathname === item.href ? "bg-accent text-accent-foreground font-semibold" : "text-foreground"
-                        )}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                       {item.label}
-                     </Link>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "block py-2 px-3 rounded-md text-lg hover:bg-accent hover:text-accent-foreground transition-colors",
+                        pathname === item.href ? "bg-accent text-accent-foreground font-semibold" : "text-foreground"
+                      )}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
                   </SheetClose>
                 ))}
               </nav>

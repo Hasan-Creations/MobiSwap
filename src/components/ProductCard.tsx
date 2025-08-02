@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from 'next/image';
@@ -33,7 +34,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 alt={product.name}
                 width={500}
                 height={400}
-                className="object-cover w-full h-full"
+                className="object-contain w-full aspect-[4/3]"
                 data-ai-hint={product.dataAiHint || "mobile phone"}
               />
             </motion.div>
@@ -43,21 +44,21 @@ export function ProductCard({ product }: ProductCardProps) {
           <Badge variant={product.condition === 'New' ? 'default' : 'secondary'} className="absolute top-3 right-3 shadow-lg">{product.condition}</Badge>
         )}
       </CardHeader>
-      <CardContent className="p-6 flex-grow flex flex-col">
-        <CardTitle className="text-xl font-headline mb-1 leading-tight">
+      <CardContent className="p-4 flex-grow flex flex-col">
+        <CardTitle className="text-base font-headline mb-1 leading-tight">
           <Link href={`/products/${product.id}`} className="hover:text-primary transition-colors">
             {product.name}
           </Link>
         </CardTitle>
-        <CardDescription className="text-2xl font-semibold text-primary mb-3">
+        <CardDescription className="text-lg font-semibold text-primary mb-2">
           PKR {product.price.toLocaleString()}
         </CardDescription>
-        <p className="text-sm text-muted-foreground line-clamp-2 flex-grow">
+        <p className="text-xs text-muted-foreground line-clamp-2 flex-grow">
           {product.description}
         </p>
       </CardContent>
-      <CardFooter className="p-6 pt-0 mt-auto">
-        <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/20">
+      <CardFooter className="p-4 pt-0 mt-auto">
+        <Button asChild size="sm" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary/20">
           <Link href={`/products/${product.id}`}>
             View Details <ArrowRight className="ml-2 h-4 w-4" />
           </Link>

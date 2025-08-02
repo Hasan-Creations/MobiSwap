@@ -1,0 +1,35 @@
+
+Privacy Policy
+Last updated: July 18, 2025
+
+At MobiSwap, your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your information.
+
+Information We Collect:
+- Non-personal data like browser type, IP address, and pages visited
+- Cookies for improving user experience and ad targeting
+- Data collected by third-party advertisers (e.g., Google AdSense)
+
+Google AdSense:
+We use Google AdSense to display ads. Google may use cookies to personalize content and ads. You can opt out of personalized advertising by visiting:
+https://www.google.com/settings/ads
+
+Cookies:
+Cookies help us remember your preferences and provide a better user experience. You can disable cookies in your browser settings.
+
+Data Usage:
+We use your data to:
+- Improve the website’s functionality and content
+- Display relevant ads via Google AdSense
+- Analyze traffic and user behavior
+
+Your Rights:
+You may request access to, or deletion of, your personal data (if any is collected).
+
+Children's Privacy:
+MobiSwap does not knowingly collect data from children under 13.
+
+Policy Changes:
+We may update this policy from time to time. Check this page for updates.
+
+Contact:
+For questions about this policy, email us at: mobiswap.support@gmail.com

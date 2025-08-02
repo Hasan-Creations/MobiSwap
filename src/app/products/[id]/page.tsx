@@ -9,25 +9,19 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { ChevronLeft, ShoppingCart, Repeat, MessageSquare } from 'lucide-react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+import { ChevronLeft, ShoppingCart, Repeat } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
+import { CartContext } from '@/context/CartContext';
+import { useToast } from '@/hooks/use-toast';
 
 const MotionCard = motion(Card);
 
 export default function ProductDetailsPage() {
   const params = useParams();
   const router = useRouter();
+  const { addToCart } = useContext(CartContext);
+  const { toast } = useToast();
   const id = typeof params.id === 'string' ? params.id : '';
   const product = getProductById(id);
 
@@ -42,6 +36,16 @@ export default function ProductDetailsPage() {
       </div>
     );
   }
+
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product);
+      toast({
+        title: "Added to Cart!",
+        description: `${product.name} has been added to your cart.`,
+      });
+    }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -120,36 +124,11 @@ export default function ProductDetailsPage() {
             <Separator className="my-6 bg-white/10" />
 
             <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-auto">
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                   <motion.div className="w-full" whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg shadow-accent/20">
-                      <ShoppingCart className="mr-2 h-5 w-5" /> Buy Now
-                    </Button>
-                  </motion.div>
-                </AlertDialogTrigger>
-                <AlertDialogContent className="glassmorphic">
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Contact to Purchase</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      To purchase the {product.name}, please contact us via WhatsApp or email.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter className="sm:flex-col items-center gap-3">
-                    <Button asChild className="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white">
-                      <a href={`https://wa.me/923292599756?text=I'm interested in buying the ${product.name}`} target="_blank" rel="noopener noreferrer">
-                         <MessageSquare className="mr-2 h-4 w-4" /> WhatsApp
-                      </a>
-                    </Button>
-                    <Button asChild className="w-full sm:w-auto" variant="outline">
-                      <a href={`mailto:hasanayub106@gmail.com?subject=Inquiry about ${product.name}`}>
-                         Email Us
-                      </a>
-                    </Button>
-                    <AlertDialogCancel className="w-full sm:w-auto mt-2 sm:mt-0">Close</AlertDialogCancel>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+               <motion.div className="w-full" whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg shadow-accent/20" onClick={handleAddToCart}>
+                  <ShoppingCart className="mr-2 h-5 w-5" /> Add to Cart
+                </Button>
+              </motion.div>
 
               <motion.div className="w-full" whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button size="lg" variant="outline" asChild className="w-full border-primary text-primary hover:bg-primary/10">

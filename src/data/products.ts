@@ -57,6 +57,7 @@ export const products: Product[] = [
     dataAiHint: 'oneplus mobile',
     specs: ['Display: 6.7" Fluid AMOLED', 'Processor: Snapdragon 8 Gen 2', 'RAM: 16GB', 'Storage: 256GB', 'Main Camera: 50MP (Hasselblad)', 'Front Camera: 16MP', 'Battery: 5000 mAh'],
     description: 'The OnePlus 11 combines smooth performance with a premium camera experience. Fast charging and a vibrant display make it a joy to use.',
+    featured: true,
     condition: 'New',
   },
   {
@@ -80,6 +81,7 @@ export const products: Product[] = [
     dataAiHint: 'samsung galaxy',
     specs: ['Display: 6.4" Super AMOLED', 'Processor: Exynos 1380', 'RAM: 8GB', 'Storage: 128GB', 'Main Camera: 50MP', 'Front Camera: 32MP', 'Battery: 5000 mAh'],
     description: 'A great all-around mid-range phone with a beautiful display, capable camera, and long-lasting battery. Perfect for everyday use.',
+    featured: true,
     condition: 'Used - Good',
   },
   {
@@ -91,6 +93,7 @@ export const products: Product[] = [
     dataAiHint: 'iphone mini',
     specs: ['Display: 5.4" Super Retina XDR', 'Processor: A15 Bionic Chip', 'RAM: 4GB', 'Storage: 128GB', 'Main Camera: 12MP Dual', 'Front Camera: 12MP', 'Battery: 2438 mAh'],
     description: 'Compact power. The iPhone 13 Mini packs incredible performance and an advanced dual-camera system into a pocket-friendly design.',
+    featured: true,
     condition: 'Used - Good',
   },
   {
@@ -102,6 +105,7 @@ export const products: Product[] = [
     dataAiHint: 'xiaomi redmi',
     specs: ['Display: 6.67" AMOLED', 'Processor: Dimensity 1080', 'RAM: 8GB', 'Storage: 256GB', 'Main Camera: 50MP', 'Front Camera: 16MP', 'Battery: 5000 mAh'],
     description: 'Experience flagship-level features without breaking the bank. The Redmi Note 12 Pro offers a stunning display, powerful camera, and fast charging.',
+    featured: true,
     condition: 'Used - Fair',
   },
   {

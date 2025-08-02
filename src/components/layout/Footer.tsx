@@ -4,6 +4,7 @@
 import Link from 'next/link';
 import { Smartphone, Mail, Phone, MapPin, Facebook, Twitter, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -14,11 +15,13 @@ export function Footer() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: false }}
+          className="flex flex-col items-start"
         >
           <Link href="/" className="flex items-center gap-2 mb-4 text-primary hover:text-primary/80 transition-colors">
-            <span className="text-2xl font-bold font-headline"><img src="/favicon.ico" alt=""/></span>
+            <Image src="/icon.png" alt="MobiSwap logo" width={28} height={28} />
+            <span className="text-2xl font-bold font-headline">MobiSwap</span>
           </Link>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm pl-1 text-muted-foreground text-left">
             Your trusted partner for buying, selling, and exchanging mobile phones. Quality devices, unbeatable prices.
           </p>
         </motion.div>

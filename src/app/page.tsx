@@ -15,7 +15,7 @@ import { Brands } from '@/components/Brands';
 import { PhoneFinder } from '@/components/PhoneFinder';
 
 const HomePage = () => {
-  const featuredProducts = products.filter(p => p.featured).slice(0, 6);
+  const featuredProducts = products.filter(p => p.featured).slice(0, 8);
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, scale: 0.5, transformOrigin: 'top center' },
@@ -94,10 +94,10 @@ const HomePage = () => {
           Featured Mobiles
         </motion.h2>
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-6 md:gap-8"
         >
           {featuredProducts.map((product) => (
-            <motion.div 
+            <motion.div
               key={product.id}
               variants={itemVariants}
               initial="hidden"

@@ -4,14 +4,14 @@
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Building, Target, Heart, Lightbulb, Users, ArrowRight } from 'lucide-react';
+import { Building, Target, Heart, Lightbulb, Users, ArrowRight, TrendingUp, Star, Package, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 const MotionCard = motion(Card);
 
 const IconText = ({ icon: Icon, title, description }: { icon: any, title: string, description: string }) => (
-    <motion.div 
+    <motion.div
         className="text-center p-6 glassmorphic rounded-2xl h-full"
         whileHover={{ y: -5, scale: 1.02 }}
         transition={{ type: "spring", stiffness: 300 }}
@@ -26,13 +26,26 @@ const IconText = ({ icon: Icon, title, description }: { icon: any, title: string
     </motion.div>
 );
 
+const StatItem = ({ icon: Icon, value, label }: { icon: any, value: string, label: string }) => (
+    <div className="flex items-center gap-4">
+        <div className="p-3 bg-primary/20 rounded-full">
+            <Icon className="h-7 w-7 text-primary" />
+        </div>
+        <div>
+            <p className="text-2xl font-bold text-foreground">{value}</p>
+            <p className="text-sm text-muted-foreground">{label}</p>
+        </div>
+    </div>
+);
+
+
 export default function AboutPage() {
 
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
-          opacity: 1,
-          transition: { staggerChildren: 0.2, delayChildren: 0.1 }
+            opacity: 1,
+            transition: { staggerChildren: 0.2, delayChildren: 0.1 }
         }
     };
 
@@ -40,30 +53,36 @@ export default function AboutPage() {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
     };
+    
+    const finalSectionCards = [
+        { type: 'founder' },
+        { type: 'stats' },
+        { type: 'cta' }
+    ];
 
     return (
-        <div className="container mx-auto px-4 py-0 space-y-20">
+        <div className="container mx-auto px-4 py-8 space-y-20">
             {/* Hero Section */}
-            <motion.section 
+            <motion.section
                 className="text-center"
                 initial="hidden"
                 animate="visible"
                 variants={containerVariants}
             >
-                <motion.div 
-                    variants={itemVariants} 
+                <motion.div
+                    variants={itemVariants}
                     className="inline-block p-4 bg-primary/20 rounded-full mb-4"
                 >
                     <Building className="h-16 w-16 text-primary" />
                 </motion.div>
-                <motion.h1 
-                    variants={itemVariants} 
+                <motion.h1
+                    variants={itemVariants}
                     className="text-4xl md:text-6xl font-bold font-headline bg-clip-text text-transparent bg-gradient-to-r from-[#ff9100] via-[#e62c6d] to-[#b25aff]"
                 >
                     About MobiSwap
                 </motion.h1>
-                <motion.p 
-                    variants={itemVariants} 
+                <motion.p
+                    variants={itemVariants}
                     className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto"
                 >
                     Simplifying the way you buy, sell, and exchange mobile phones with a commitment to trust, quality, and innovation.
@@ -71,7 +90,7 @@ export default function AboutPage() {
             </motion.section>
 
             {/* Our Mission Section */}
-            <motion.section 
+            <motion.section
                 className="grid md:grid-cols-2 gap-12 items-center"
                 initial="hidden"
                 whileInView="visible"
@@ -104,10 +123,10 @@ export default function AboutPage() {
 
             {/* Our Values Section */}
             <motion.section
-                 initial="hidden"
-                 whileInView="visible"
-                 viewport={{ once: true, amount: 0.2 }}
-                 variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={containerVariants}
             >
                 <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center mb-12 font-headline">Our Core Values</motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -117,55 +136,103 @@ export default function AboutPage() {
                 </div>
             </motion.section>
 
-            {/* Meet the Founder Section */}
             <motion.section
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                variants={itemVariants}
+                className="grid md:grid-cols-3 items-stretch justify-center gap-8"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.5 }}
             >
-                 <h2 className="text-3xl font-bold text-center mb-12 font-headline">Meet the Founder</h2>
-                 <MotionCard 
-                    className="max-w-md mx-auto text-center glassmorphic"
-                    whileHover={{ y: -5 }}
-                >
-                    <CardHeader className="items-center">
-                        <Image
-                            src="https://placehold.co/128x128.png"
-                            alt="Founder's profile picture"
-                            width={128}
-                            height={128}
-                            className="rounded-full border-4 border-primary/50 shadow-lg"
-                            data-ai-hint="male portrait"
-                        />
-                    </CardHeader>
-                    <CardContent>
-                        <CardTitle className="text-2xl font-headline">Hasan Ayub</CardTitle>
-                        <p className="text-primary font-semibold mb-4">Creator of MobiSwap</p>
-                        <p className="text-muted-foreground">
-                            As a passionate technologist and problem-solver, I created MobiSwap to address the frustrations I saw in the mobile phone market. My goal is to build a platform that people can rely on for years to come.
-                        </p>
-                    </CardContent>
-                 </MotionCard>
-            </motion.section>
-
-            {/* CTA Section */}
-            <motion.section 
-                className="text-center py-16"
-                 initial="hidden"
-                 whileInView="visible"
-                 viewport={{ once: true, amount: 0.3 }}
-                 variants={itemVariants}
-            >
-                <h2 className="text-3xl md:text-4xl font-bold font-headline mb-6 text-primary">Join the MobiSwap Community</h2>
-                <p className="text-lg text-foreground/80 mb-8 max-w-xl mx-auto">
-                Ready to find your next phone? Explore our curated collection and experience the difference.
-                </p>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-block">
-                <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1">
-                    <Link href="/products">Explore Phones <ArrowRight className="ml-2 h-5 w-5" /></Link>
-                </Button>
-                </motion.div>
+                {finalSectionCards.map((card, index) => (
+                    <motion.div
+                        key={card.type}
+                        className="flex"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: index * 0.15 }}
+                        viewport={{ once: false }}
+                    >
+                        {card.type === 'founder' && (
+                            <MotionCard
+                                className="w-full text-center glassmorphic flex flex-col"
+                                whileHover={{ y: -5, scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <CardHeader className="items-center pt-8">
+                                <Image
+                                        src="https://placehold.co/128x128.png"
+                                        alt="Founder's profile picture"
+                                        width={128}
+                                        height={128}
+                                        className="rounded-full border-4 border-primary/50 shadow-lg"
+                                        data-ai-hint="male portrait"
+                                    />
+                                </CardHeader>
+                                <CardContent className="flex flex-col flex-grow p-6">
+                                    <CardTitle className="text-2xl font-headline">Hasan Ayub</CardTitle>
+                                    <p className="text-primary font-semibold mb-4">Creator of MobiSwap</p>
+                                    <p className="text-muted-foreground text-sm flex-grow">
+                                        As a passionate technologist and problem-solver, I created MobiSwap to address the frustrations I saw in the mobile phone market. My goal is to build a platform that people can rely on for years to come.
+                                    </p>
+                                </CardContent>
+                            </MotionCard>
+                        )}
+                        {card.type === 'stats' && (
+                            <MotionCard 
+                                className="w-full glassmorphic flex flex-col"
+                                whileHover={{ y: -5, scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <CardHeader className="p-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-3 bg-accent/20 rounded-full">
+                                            <TrendingUp className="h-6 w-6 text-accent" />
+                                        </div>
+                                        <CardTitle className="text-2xl font-headline">Our Journey</CardTitle>
+                                    </div>
+                                </CardHeader>
+                                <CardContent className="p-6 pt-0 space-y-6 flex-grow">
+                                    <StatItem icon={Calendar} value="2024" label="Year Founded" />
+                                    <StatItem icon={Star} value="1,000+" label="Happy Customers" />
+                                    <StatItem icon={Package} value="1,200+" label="Devices Handled" />
+                                    <StatItem icon={Users} value="5+" label="Team Members" />
+                                </CardContent>
+                            </MotionCard>
+                        )}
+                        {card.type === 'cta' && (
+                           <MotionCard 
+                                className="w-full glassmorphic flex flex-col items-center justify-center text-center p-8"
+                                whileHover={{ y: -5, scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                            >
+                                <CardHeader className="p-0 items-center">
+                                    <div className="p-4 bg-primary/20 rounded-full mb-4">
+                                        <Users className="h-10 w-10 text-primary" />
+                                    </div>
+                                    <CardTitle className="text-2xl font-headline text-primary">
+                                        Join the Community
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="p-0 mt-4 flex-grow flex flex-col justify-center">
+                                    <p className="text-muted-foreground mb-6 text-sm">
+                                        Ready to find your next phone? Explore our curated collection and experience the MobiSwap difference.
+                                    </p>
+                                </CardContent>
+                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="mt-auto">
+                                        <Button
+                                            size="lg"
+                                            asChild
+                                            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300 transform hover:-translate-y-1"
+                                        >
+                                            <Link href="/products">
+                                                Explore Phones <ArrowRight className="ml-2 h-5 w-5" />
+                                            </Link>
+                                        </Button>
+                                    </motion.div>
+                            </MotionCard>
+                        )}
+                    </motion.div>
+                ))}
             </motion.section>
         </div>
     );
