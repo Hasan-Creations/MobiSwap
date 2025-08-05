@@ -1,16 +1,16 @@
-
 import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/toaster';
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from 'next-themes';
 import { FloatingActionButtons } from '@/components/FloatingActionButtons';
 import { CartProvider } from '@/context/CartContext';
 
 export const metadata: Metadata = {
   title: 'MobiSwap - Buy, Sell, Exchange Mobile Phones',
-  description: 'MobiSwap is your one-stop shop for buying new and pre-owned mobile phones, or exchanging your old device for a new one. Clean, professional, and mobile-friendly.',
+  description:
+    'MobiSwap is your one-stop shop for buying new and pre-owned mobile phones, or exchanging your old device for a new one. Clean, professional, and mobile-friendly.',
 };
 
 export default function RootLayout({
@@ -21,10 +21,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true} className="!scroll-smooth">
       <head>
-      <link rel="shortcut icon" href="/logo.png" type="image/png" />
+        {/* ✅ Google AdSense Auto Ads Script */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3487579061580028"
+          crossOrigin="anonymous"
+        ></script>
+
+        <link rel="shortcut icon" href="/logo.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Sora:wght@100..800&display=swap"
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Sora:wght@100..800&display=swap"
           rel="stylesheet"
         />
       </head>
