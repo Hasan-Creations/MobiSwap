@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mobiswap.com/sitemap.xml
+Sitemap: https://mobiswap.vercel.app/sitemap.xml
