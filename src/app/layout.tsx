@@ -28,7 +28,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
 
-        <link rel="shortcut icon" href="/logo.png" type="image/png" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

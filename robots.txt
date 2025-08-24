@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://mobiswap.vercel.app/sitemap.xml
