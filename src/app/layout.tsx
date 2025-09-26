@@ -21,12 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true} className="!scroll-smooth">
       <head>
-        {/* ✅ Google AdSense Auto Ads Script */}
-        <script
+        {/* <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3487579061580028"
           crossOrigin="anonymous"
-        ></script>
+        ></script> */}
 
         <link rel="shortcut icon" href="favicon.ico" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
