@@ -62,24 +62,26 @@ export function Header() {
 
   return (
     <header className="bg-background/70 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-white/10">
-      <div className="container mx-auto flex items-center justify-between">
-
-        {/* Left: Logo (smaller padding, bigger logo) */}
-        <div className="px-4">
+      <div className="container mx-auto flex items-center justify-between px-2 md:px-4">
+        {/* Left: Logo */}
+        <div className="px-2 md:px-4">
           <Link
             href="/"
-            className="flex items-center gap-2 text-primary transition-transform duration-300 transform hover:scale-105"
+            className="flex items-center gap-1 text-primary transition-transform duration-300 transform hover:scale-105"
           >
-            <Image src="/icon.png" alt="MobiSwap logo" width={48} height={48} />
+            <Image src="/icon.png" alt="MobiSwap logo" width={40} height={40} />
             <span className="text-2xl font-bold font-headline">MobiSwap</span>
           </Link>
         </div>
 
-        {/* Right: Desktop Nav + Cart + Theme Toggle */}
-        <div className="hidden md:flex items-center space-x-2 lg:space-x-4 px-4 py-4">
+        {/* Right: Desktop Nav */}
+        <div className="hidden md:flex items-center space-x-2 lg:space-x-4 px-2 py-4">
           <nav className="flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => (
-              <Button key={item.href} variant="ghost" asChild
+              <Button
+                key={item.href}
+                variant="ghost"
+                asChild
                 className={cn(
                   "text-foreground/80 hover:bg-secondary hover:text-secondary-foreground relative",
                   pathname === item.href && "text-foreground font-semibold"
@@ -113,8 +115,8 @@ export function Header() {
           </div>
         </div>
 
-        {/* Mobile Nav: Cart + Toggle + Menu */}
-        <div className="md:hidden flex items-center space-x-1 px-4 py-4">
+        {/* Mobile Nav */}
+        <div className="md:hidden flex items-center space-x-1 px-1 py-4">
           <Link href="/cart">
             <Button variant="ghost" size="icon" className="relative h-9 w-9">
               <ShoppingCart className="h-5 w-5" />
@@ -133,10 +135,10 @@ export function Header() {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-full max-w-xs bg-card p-6">
+            <SheetContent side="right" className="w-full max-w-xs bg-card p-4">
               <SheetTitle className="sr-only">Menu</SheetTitle>
               <SheetDescription className="sr-only">Main navigation for mobile.</SheetDescription>
-              <div className="flex justify-between items-center mb-6">
+              <div className="flex justify-between items-center mb-4">
                 <Link
                   href="/"
                   className="flex items-center gap-2 text-primary"
@@ -146,14 +148,16 @@ export function Header() {
                   <span className="text-xl font-bold font-headline">MobiSwap</span>
                 </Link>
               </div>
-              <nav className="flex flex-col space-y-3">
+              <nav className="flex flex-col space-y-2">
                 {navItems.map((item) => (
                   <SheetClose key={item.href} asChild>
                     <Link
                       href={item.href}
                       className={cn(
-                        "block py-2 px-3 rounded-md text-lg hover:bg-accent hover:text-accent-foreground transition-colors",
-                        pathname === item.href ? "bg-accent text-accent-foreground font-semibold" : "text-foreground"
+                        "block py-2 px-2 rounded-md text-lg hover:bg-accent hover:text-accent-foreground transition-colors",
+                        pathname === item.href
+                          ? "bg-accent text-accent-foreground font-semibold"
+                          : "text-foreground"
                       )}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
@@ -167,5 +171,6 @@ export function Header() {
         </div>
       </div>
     </header>
+
   );
 }
