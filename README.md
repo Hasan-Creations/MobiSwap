@@ -1,25 +1,23 @@
-# MobiSwap: AI-Powered Mobile Marketplace
+# **MobiSwap: AI-Powered Mobile Marketplace**
 
-## Student Information
-
-*   **Name:** [Your Name Here]
-*   **Student ID:** [Your Student ID Here]
+## **Student Information**
+**Name:** Hasan Ayub  
 
 ---
 
-## Project Description
+## **Project Description**
+MobiSwap is a smart marketplace where people can buy, sell, or exchange mobile phones. It comes with an **AI Phone Finder** that helps users discover the best phone based on their needs. The platform focuses on being simple, modern, and easy to use — giving users a smooth and professional experience.
 
-MobiSwap is an AI-powered marketplace for buying, selling, and exchanging mobile phones. It features an AI Phone Finder for personalized recommendations and a clean, professional interface for a seamless user experience.
+---
 
-## Technologies Used
+## **Technologies Used**
+The project is built using a modern web stack that focuses on speed, design, and flexibility:
 
-The application is built with a modern, production-ready tech stack, emphasizing performance, developer experience, and scalability:
-
--   **Framework**: **Next.js** (with App Router) for server-rendered React applications.
--   **UI Library**: **React** for building interactive user interfaces.
--   **Styling**: **Tailwind CSS** for a utility-first CSS framework.
--   **Component Library**: **ShadCN UI** for a set of beautifully designed, reusable components.
--   **AI Integration**: **Genkit (by Firebase)** for integrating powerful generative AI models.
--   **Animations**: **Framer Motion** for creating fluid and engaging animations.
--   **Forms**: **React Hook Form** for efficient and validatable forms.
--   **Schema Validation**: **Zod** for defining and validating data schemas.
+- **Next.js** – for building a fast and optimized web app.  
+- **React** – to make the interface dynamic and interactive.  
+- **Tailwind CSS** – for clean, responsive, and customizable styling.  
+- **ShadCN UI** – for ready-to-use, elegant UI components.  
+- **Genkit (Firebase)** – to power the AI features and recommendations.  
+- **Framer Motion** – for smooth animations and transitions.  
+- **React Hook Form** – for handling forms easily.  
+- **Zod** – for checking and validating input data.  
