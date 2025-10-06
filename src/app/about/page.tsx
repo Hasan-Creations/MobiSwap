@@ -65,7 +65,7 @@ export default function AboutPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 space-y-20">
+        <div className="container mx-auto px-4 py-0 space-y-20">
             {/* Hero Section */}
             <motion.section
                 className="text-center"
