@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true} className="!scroll-smooth">
       <head>
         {/* ✅ Google AdSense Auto Ads Script */}
-        {/* <script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3487579061580028"
           crossOrigin="anonymous"
