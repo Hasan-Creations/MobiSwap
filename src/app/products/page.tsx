@@ -16,8 +16,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 
-const INITIAL_LOAD_COUNT = 12;
-const LOAD_MORE_COUNT = 8;
+const INITIAL_LOAD_COUNT = 15;
+const LOAD_MORE_COUNT = 10;
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -159,7 +159,7 @@ export default function ProductsPage() {
       {visibleProducts.length > 0 ? (
         <>
           <div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 md:gap-8"
           >
             {visibleProducts.map((product) => (
               <motion.div 

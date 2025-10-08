@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useContext } from 'react';
@@ -57,6 +56,27 @@ export default function CheckoutPage() {
     }
     return null; 
   }
+
+  // Format card number with spaces
+  const formatCardNumber = (value: string) => {
+    const digitsOnly = value.replace(/\D/g, '');
+    const formatted = digitsOnly.match(/.{1,4}/g)?.join(' ') || digitsOnly;
+    return formatted.substring(0, 19); // Max 16 digits + 3 spaces
+  };
+
+  // Format expiry date with slash
+  const formatExpiryDate = (value: string) => {
+    const digitsOnly = value.replace(/\D/g, '');
+    if (digitsOnly.length >= 2) {
+      return `${digitsOnly.substring(0, 2)}/${digitsOnly.substring(2, 4)}`;
+    }
+    return digitsOnly;
+  };
+
+  // Format CVC to allow only digits
+  const formatCVC = (value: string) => {
+    return value.replace(/\D/g, '').substring(0, 4);
+  };
 
   const onSubmit = (data: CheckoutFormValues) => {
     const orderId = `MS-${Date.now()}`;
@@ -160,7 +180,19 @@ export default function CheckoutPage() {
                         <FormItem>
                             <FormLabel>Card Number</FormLabel>
                             <FormControl>
-                                <div className="relative"><CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" /><Input placeholder="0000 0000 0000 0000" {...field} className="pl-9" /></div>
+                                <div className="relative">
+                                  <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                  <Input 
+                                    placeholder="0000 0000 0000 0000" 
+                                    {...field}
+                                    onChange={(e) => {
+                                      const formatted = formatCardNumber(e.target.value);
+                                      field.onChange(formatted);
+                                    }}
+                                    className="pl-9" 
+                                    maxLength={19}
+                                  />
+                                </div>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -169,14 +201,34 @@ export default function CheckoutPage() {
                         <FormField control={form.control} name="expiryDate" render={({ field }) => (
                             <FormItem className="flex-1">
                                 <FormLabel>Expiry Date</FormLabel>
-                                <FormControl><Input placeholder="MM/YY" {...field} /></FormControl>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="MM/YY" 
+                                    {...field}
+                                    onChange={(e) => {
+                                      const formatted = formatExpiryDate(e.target.value);
+                                      field.onChange(formatted);
+                                    }}
+                                    maxLength={5}
+                                  />
+                                </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />
                         <FormField control={form.control} name="cvc" render={({ field }) => (
                             <FormItem className="flex-1">
                                 <FormLabel>CVC</FormLabel>
-                                <FormControl><Input placeholder="123" {...field} /></FormControl>
+                                <FormControl>
+                                  <Input 
+                                    placeholder="123" 
+                                    {...field}
+                                    onChange={(e) => {
+                                      const formatted = formatCVC(e.target.value);
+                                      field.onChange(formatted);
+                                    }}
+                                    maxLength={4}
+                                  />
+                                </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )} />

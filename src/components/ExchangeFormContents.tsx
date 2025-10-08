@@ -46,7 +46,7 @@ const exchangeFormSchema = z.object({
       message: "An image of your phone is required.",
     }),
   name: z.string().min(3, "Name must be at least 2 characters.").max(50, "Name must be at most 50 characters."),
-  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Please enter a valid phone number."),
+  phone: z.string().regex(/^\d{11}$/, "Please enter exactly 11 digits (e.g., 03123456789)"),
   email: z.string().email("Please enter a valid email address."),
 });
 
@@ -93,7 +93,7 @@ export function ExchangeFormContents() {
       });
       return;
     }
-    
+
     setIsEstimating(true);
     setEstimationResult(null);
     try {
@@ -118,7 +118,7 @@ export function ExchangeFormContents() {
 
   const onExchangeSubmit = async (data: ExchangeFormValues) => {
     setIsExchangeSubmitting(true);
-    console.log("Exchange Data:", data); 
+    console.log("Exchange Data:", data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: "Exchange Request Submitted!",
@@ -132,7 +132,7 @@ export function ExchangeFormContents() {
 
   const onSellSubmit = async (data: ExchangeFormValues) => {
     setIsSellSubmitting(true);
-    console.log("Sell Data:", data); 
+    console.log("Sell Data:", data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: "Sell Request Submitted!",
@@ -261,7 +261,7 @@ export function ExchangeFormContents() {
 
               <fieldset className="space-y-6 border border-white/10 p-4 rounded-md">
                 <legend className="text-lg font-semibold px-1 font-headline text-primary">Upload & Contact Info</legend>
-                 <FormField
+                <FormField
                   control={form.control}
                   name="image"
                   render={({ field }) => (
@@ -303,7 +303,7 @@ export function ExchangeFormContents() {
                       <FormControl>
                         <div className="relative">
                           <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input type="tel" placeholder="+1 (555) 123-4567" {...field} className="pl-9 bg-background/80" />
+                          <Input type="tel" placeholder="03123456789" {...field} className="pl-9 bg-background/80" />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -328,25 +328,25 @@ export function ExchangeFormContents() {
                 />
               </fieldset>
 
-              <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button
                     type="button"
                     onClick={form.handleSubmit(onExchangeSubmit)}
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-lg shadow-lg shadow-primary/20"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 text-base shadow-lg shadow-primary/20"
                     disabled={isExchangeSubmitting || isSellSubmitting}
                   >
-                    {isExchangeSubmitting ? "Submitting Exchange..." : "Submit Exchange Request"}
+                    {isExchangeSubmitting ? "Submitting..." : "Exchange"}
                   </Button>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Button
                     type="button"
                     onClick={form.handleSubmit(onSellSubmit)}
-                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-lg shadow-lg shadow-accent/20"
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground py-3 text-base shadow-lg shadow-accent/20"
                     disabled={isSellSubmitting || isExchangeSubmitting}
                   >
-                    {isSellSubmitting ? "Submitting Sell..." : "Submit Sell Request"}
+                    {isSellSubmitting ? "Submitting..." : "Sell"}
                   </Button>
                 </motion.div>
               </div>
