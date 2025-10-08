@@ -1,3 +1,5 @@
+// app/layout.tsx
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
@@ -6,6 +8,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from 'next-themes';
 import { FloatingActionButtons } from '@/components/FloatingActionButtons';
 import { CartProvider } from '@/context/CartContext';
+// Import the new Client Component Loader directly
+import SmoothScrollLoader from '@/components/SmoothScrollLoader'; 
 
 export const metadata: Metadata = {
   title: 'MobiSwap - Buy, Sell, Exchange Mobile Phones',
@@ -19,14 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true} className="!scroll-smooth">
+    <html lang="en" suppressHydrationWarning={true}>
       <head>
-        {/* <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3487579061580028"
-          crossOrigin="anonymous"
-        ></script>  */}
-
+        {/* AdScript/Font links... (omitted for brevity) */}
         <link rel="shortcut icon" href="favicon.ico" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -35,6 +34,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
+      
       <body className="font-body antialiased flex flex-col min-h-screen bg-background text-foreground">
         <ThemeProvider
           attribute="class"
@@ -43,17 +43,30 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <CartProvider>
+            
+            {/* Background elements (must be outside of scroll container) */}
             <div className="fixed top-0 left-0 w-full h-full -z-10">
               <div className="absolute top-0 left-0 w-full h-full bg-background" />
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[150%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#ff9100]/20 via-[#e62c6d]/10 to-background/0" />
             </div>
-            <Header />
-            <main className="flex-grow container mx-auto px-4 py-8 z-10">
-              {children}
-            </main>
-            <Footer />
-            <FloatingActionButtons />
+            
+            <Header /> {/* Fixed elements are placed outside the scroll wrapper */}
+
+            {/* Use the new client component loader here */}
+            <SmoothScrollLoader>
+              
+              {/* Main content that will be smooth-scrolled */}
+              <main className="flex-grow container mx-auto px-4 py-8 z-10">
+                {children}
+              </main>
+
+              <Footer /> 
+              <FloatingActionButtons />
+              
+            </SmoothScrollLoader>
+            
             <Toaster />
+            
           </CartProvider>
         </ThemeProvider>
       </body>
