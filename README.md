@@ -3,7 +3,7 @@
 ## **Student Information**
 **Name:** Hasan Ayub  
 
----
+---   
 
 ## **Project Description**
 MobiSwap is a smart marketplace where people can buy, sell, or exchange mobile phones. It comes with an **AI Phone Finder** that helps users discover the best phone based on their needs. The platform focuses on being simple, modern, and easy to use — giving users a smooth and professional experience.
